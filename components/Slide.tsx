@@ -47,7 +47,7 @@ export default function MovieSlide ({ url, subject }: Props) {
     }, []);
 
     return (
-        <div className="w-[90%] mx-auto pb-4 border-b border-solid">
+        <div className="w-[90%] mx-auto pb-4">
             <h1 className="text-4xl my-3">{subject}</h1>
             <Swiper 
                 modules={[Navigation]}

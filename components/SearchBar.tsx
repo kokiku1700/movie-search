@@ -18,9 +18,8 @@ export default function SearchBar ({search, setSearch}: Props) {
             onChange={onChangeSearch} 
             placeholder="제목을 입력해주세요."
             className="
-                w-2/3
-                rounded-4xl 
-                text-2xl 
+                w-2/3 rounded-4xl 
+                text-2xl text-black
                 leading-6
                 font-normal
                 p-3 pl-10 pr-17 m-5
