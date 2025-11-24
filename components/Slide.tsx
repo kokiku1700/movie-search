@@ -60,8 +60,10 @@ export default function MovieSlide ({ url, subject }: Props) {
                         <h2 className="overflow-hidden whitespace-nowrap text-center text-xl">{movie.title || movie.original_title || "없음"}</h2>
                         <Link 
                             href={`/movie/${movie.id}`} 
-                            className="block aspect-[2/3] w-50 rounded-lg overflow-hidden"
-                        >
+                            className="
+                                block aspect-[2/3] w-50 rounded-lg overflow-hidden
+                                hover:border-2
+                            ">
                             <Image
                                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                 alt={movie.title || movie.original_title || "없음"}

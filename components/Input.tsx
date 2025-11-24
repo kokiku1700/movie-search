@@ -1,19 +1,25 @@
 
 type Input = {
+    value: string;
     placeholder: string;
+    onChange: (value: string) => void;
 }
 
-export default function Input (props: Input) {
+export default function Input ({value, onChange, placeholder }: Input) {
 
 
     return (
         <input 
             className="
                 w-[60%]
-                bg-white rounded-xl text-xl p-3 my-3
+                text-xl text-black
+                bg-white rounded-2xl 
+                px-4 p-3 my-3
                 focus:outline-none 
             "
-            placeholder={props.placeholder}
+            value={value}
+            placeholder={placeholder}
+            onChange={e => onChange(e.target.value)}
         />
     )
 }
