@@ -11,18 +11,40 @@ type Input = {
 }
 
 export default function Input ({type, value, onChange, onValidate, pwValue, validate, placeholder }: Input) {
+    // border 색을 컨트롤하기 위한 변수
     const [valid, setValid] = useState<boolean | null>(null);
     
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
 
         onChange(val);
 
+        let isValid = true;
+
+        // 비밀번호와 비밀번호 확인을 비교하기 위한 코드
         if ( validate ) {
-            const isValid = validate(val, pwValue);
-            setValid(isValid);
-            onValidate?.(isValid);
-        } 
+            isValid = validate(val, pwValue);
+        };
+
+        // 닉네임과 아이디의 중복을 체크하는 코드
+        try {
+            let apiUrl = "";
+
+            if ( type === "name" ) apiUrl = `/api/check_nickname?nickname=${val}`;
+            else if ( type === "id" ) apiUrl = `/api/check_id?id=${val}`;
+            
+            if ( apiUrl ) {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                
+                if ( data.success ) isValid = false;
+            }
+        } catch ( err ) {
+            console.log(err);
+            isValid = false;
+        }
+        setValid(isValid);
+        onValidate?.(isValid);
     }
 
     return (

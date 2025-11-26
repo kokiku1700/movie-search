@@ -8,7 +8,7 @@ export default function Button ( props: ButtonProps ) {
         <button
             className="
                 w-[60%]
-                text-xl text-black text-black
+                text-xl text-black
                 bg-[#FAFAFA]
                 rounded-4xl
                 p-3 my-3
