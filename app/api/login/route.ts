@@ -1,12 +1,4 @@
-import postgres from "postgres";
-
-const sql = postgres({
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    database: process.env.POSTGRES_DATABASE,
-    username: process.env.POSTGRES_USERNAME,
-    password: process.env.POSTGRES_PW,
-});
+import sql from "@/lib/sql";
 
 export async function POST ( req: Request ) {
     const { id, password } = await req.json();

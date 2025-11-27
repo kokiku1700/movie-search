@@ -7,6 +7,8 @@ import 'swiper/css/navigation';
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import heart from "@/public/heart.png";
+import emptyHeart from "@/public/emptyHeart.png";
 
 interface Props {
     url: string;
@@ -31,6 +33,7 @@ interface PopularMovies {
 export default function MovieSlide ({ url, subject }: Props) {
     const [movies, setMovies] = useState<Movie[]>([]);
 
+    // 전달 받은 url로 작품 목록을 받아온다.
     useEffect(() => {
         async function getMovieData () {
             const res =  await fetch(`https://api.themoviedb.org/3/${url}`, {
@@ -72,6 +75,10 @@ export default function MovieSlide ({ url, subject }: Props) {
                                 className="w-full h-full object-cover"
                             />
                         </Link>
+                        <Image 
+                            src={emptyHeart} alt="emptyHeart"
+                            className="absolute bottom-[1%] right-[1%] cursor-pointer" 
+                        />
                     </SwiperSlide>
                 ))}
             </Swiper>
