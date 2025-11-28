@@ -9,12 +9,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import heart from "@/public/heart.png";
 import emptyHeart from "@/public/emptyHeart.png";
+import { useLikes } from "@/hooks/useLikes";
 
-interface Props {
+// 전달 받은 tmdb api와 슬라이드 제목의 타입
+type Props = {
     url: string;
     subject: string;
 }
-
+// 영화 각각의 정보의 타입
 interface Movie {
     id: number;
     title: string;
@@ -25,13 +27,16 @@ interface Movie {
     release_date: string;
 }
 
-interface PopularMovies {
+interface Movies {
     results: Movie[];
 }
 
 
 export default function MovieSlide ({ url, subject }: Props) {
+    // 슬라이드에 사용되는 영화 목록을 저장하는 변수
     const [movies, setMovies] = useState<Movie[]>([]);
+    // 좋아요 커스텀훅
+    const { likeMovies, toggleHeart } = useLikes();
 
     // 전달 받은 url로 작품 목록을 받아온다.
     useEffect(() => {
@@ -42,7 +47,7 @@ export default function MovieSlide ({ url, subject }: Props) {
                     Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
                 }
             });
-            const data: PopularMovies = await res.json();
+            const data: Movies = await res.json();
 
             setMovies(data.results);
         }
@@ -76,7 +81,9 @@ export default function MovieSlide ({ url, subject }: Props) {
                             />
                         </Link>
                         <Image 
-                            src={emptyHeart} alt="emptyHeart"
+                            src={likeMovies.includes(movie.id) ? heart : emptyHeart} 
+                            alt={likeMovies.includes(movie.id) ? "heart" : "emptyHeart"}
+                            onClick={() => toggleHeart(movie.id)}
                             className="absolute bottom-[1%] right-[1%] cursor-pointer" 
                         />
                     </SwiperSlide>

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
     title: "D.MS 찜한 작품",
@@ -13,6 +13,7 @@ export default function RootLayout ({
 }>) {
     return(
         <>
+            <Header />
             {children}
         </>
     )
