@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 type Information = {
     id: string | '';
     nickname: string | '';
+    password?: string;
 };
 
 export default function MyInformation () {
@@ -22,10 +23,14 @@ export default function MyInformation () {
         setInformation({id, nickname});
     }, []);
 
+    const onSaveInfo = (e: Information) => {
+        setInformation(e);
+    };
+
     return (
         <div className="w-full">
             <section className="
-                w-[60%] mx-auto mt-20 p-10
+                w-[40%] mx-auto mt-20 p-10
                 rounded-lg bg-gray-500">
                 <div className="flex items-center">
                     <h3>아이디</h3>
@@ -42,8 +47,7 @@ export default function MyInformation () {
                     <Button content="회원탈퇴" />
                 </div>
             </section>
-            <ChangeModal id={information.id} nickname={information.nickname} />
+            <ChangeModal id={information.id} nickname={information.nickname} onSave={onSaveInfo} />
         </div>
-
     )
 }
