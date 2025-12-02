@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useLikes } from "@/hooks/useLikes";
 import heart from "@/public/heart.png";
 import emptyHeart from "@/public/emptyHeart.png";
+import Link from "next/link";
 
 // 영화 각각의 정보의 타입
 interface Movie {
@@ -48,22 +49,29 @@ export default function Likes () {
     }, []);
 
     return (
-        <div className="w-[90%] mx-auto grid grid-cols-[repeat(auto-fit,minmax(200px,200px))] gap-4">
+        <div className="w-[95%] mx-auto grid grid-cols-[repeat(auto-fit,minmax(200px,200px))] gap-4">
             {movies.map(movie => (
-                <div key={movie.id}>
-                    <p>{movie.title}</p>
-                    <div className="relative aspect-[2/3]">
+                <div key={movie.id} className="relative overflow-hidden">
+                    <p className="text-center whitespace-nowrap">{movie.title}</p>
+                    <Link href={`/movie/${movie.id}`}
+                        className="
+                            relative block aspect-[2/3] rounded-lg 
+                            overflow-hidden
+                            hover:border-2">
                         <Image 
                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} 
-                            fill className="object-cover"/>
-                        <Image 
-                            src={likeMovies.includes(movie.id) ? heart : emptyHeart} 
-                            alt={likeMovies.includes(movie.id) ? "heart" : "emptyHeart"}
-                            onClick={() => toggleHeart(movie.id)}
-                            className="absolute bottom-[1%] right-[1%] cursor-pointer" 
-                        />
-                    </div>
+                            fill 
+                            className="
+                            object-cover cursor-pointer
+                            "/>
+                    </Link>
                     
+                    <Image 
+                        src={likeMovies.includes(movie.id) ? heart : emptyHeart} 
+                        alt={likeMovies.includes(movie.id) ? "heart" : "emptyHeart"}
+                        onClick={() => toggleHeart(movie.id)}
+                        className="absolute bottom-[1%] right-[1%] cursor-pointer" 
+                    />                    
                 </div>
                 
             ))}

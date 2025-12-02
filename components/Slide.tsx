@@ -69,15 +69,14 @@ export default function MovieSlide ({ url, subject }: Props) {
                         <Link 
                             href={`/movie/${movie.id}`} 
                             className="
-                                block aspect-[2/3] w-50 rounded-lg overflow-hidden
+                                relative block aspect-[2/3] rounded-lg overflow-hidden
                                 hover:border-2
                             ">
                             <Image
                                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                 alt={movie.title || movie.original_title || "없음"}
-                                width={500}
-                                height={500}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         </Link>
                         <Image 
