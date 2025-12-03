@@ -13,8 +13,8 @@ export default function ModalInput ({ type, name, value, onChange, placeholder }
         <input type={type} value={value} name={name}
             onChange={onChange} placeholder={placeholder} 
             className="
-                w-[80%]
-                p-2
+                w-[60%]
+                p-2 m-2
                 rounded-lg border-1
             "/>
     )

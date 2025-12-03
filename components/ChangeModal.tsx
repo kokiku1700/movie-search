@@ -18,11 +18,15 @@ export default function ChangeModal ({ modalType, id, nickname, onClick, onSave 
         id,
         nickname,
     });
+    // 비밀번호 변경 모달안에 입력될 비밀번호 모음
+    // 차례대로 현재 비밀번호, 새 비밀번호, 새 비밀번호 확인
     const [password, setPassword] = useState({
         now: "",
         edit: "",
         editCheck: "",
     });
+    // 닉네임 중복확인을 위한 변수
+    // 
     const [duplication, setDuplication] = useState(false);
     const router = useRouter();
     // props로 전달받은 값이 제대로 적용이 안돼서 만든 코드.
@@ -116,27 +120,40 @@ export default function ChangeModal ({ modalType, id, nickname, onClick, onSave 
     };
 
     return (
-        <div className="relative w-full">
+        <div className="fixed inset-0 w-full">
             <div className="
                 absolute top-[50%] left-[50%] w-[30%] 
                 transform translate-x-[-50%] translate-y-[-50%]
-                p-5 text-black bg-white">
+                p-5 text-black bg-white rounded-lg">
                 {modalType === "nickname" ? 
                     <div>
-                        <ModalInput type="nickname" name="nickname" value={local.nickname} onChange={onChangeLocal} />
-                        <ModalButton content="중복확인" onClick={onClickDuplication} />
+                        <h1 className="m-2">닉네임 :</h1>
+                        <div className="flex justify-center items-center">
+                            <ModalInput type="nickname" name="nickname" value={local.nickname} onChange={onChangeLocal} />
+                            <ModalButton content="중복확인" onClick={onClickDuplication} />
+                        </div>
+                        
                     </div>
                     :
                     <div>
-                        <ModalInput type="password" name="now" value={password.now} onChange={onChangePW} />
-                        <ModalInput type="password" name="edit" value={password.edit} onChange={onChangePW} />
-                        <ModalInput type="password" name="editCheck" value={password.editCheck} onChange={onChangePW} />
+                        <div>
+                            <h1>현재 비밀번호 :</h1>
+                            <ModalInput type="password" name="now" value={password.now} onChange={onChangePW} />
+                        </div>
+                        <div>
+                            <h1>새 비밀번호 :</h1>
+                            <ModalInput type="password" name="edit" value={password.edit} onChange={onChangePW} />
+                        </div>
+                        <div>
+                            <h1>새 비밀번호 확인 :</h1>
+                            <ModalInput type="password" name="editCheck" value={password.editCheck} onChange={onChangePW} />
+                        </div>
                     </div>
                 }
 
                 <div className="flex justify-end">
                     <ModalButton content="취소" onClick={onClickCancle} color="red" />
-                    <ModalButton content="변경" onClick={onClickEdit} />
+                    <ModalButton content="변경" onClick={onClickEdit} color="green" />
                 </div>
             </div>
         </div>

@@ -12,8 +12,8 @@ export default function ModalButton ({ content, onClick, color, name }: Props) {
         <button
             className={`
                 mx-5 p-2
-                ${color ? "text-red-500" : "text-green-500"}
-                cursor-pointer    
+                ${color === "black" ? `text-${color}` : `text-${color}-500`}
+                cursor-pointer
             `}
             name={name}
             onClick={onClick}

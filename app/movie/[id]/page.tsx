@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import Image from "next/image";
 
 async function getMovieDetail (id: string) {
@@ -28,25 +27,26 @@ export default async function MovieDetail ({
     const movie = await getMovieDetail(id);
 
     return (
-        <>
-            <Header />
-            <div className="flex">
-                <Image 
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    width={500}
-                    height={500}
-                    className="m-3"
-                />
-                <div className="m-3">
-                    <h1 className="text-3xl">{movie.title}</h1>
-                    <p>줄거리:{movie.overview}</p>
-                    <p>출시일:{movie.release_date}</p>
-                    <p>상영시간:{movie.runtime}분</p>
-                    <p>{movie.genres.name}</p>
+        <div className="flex w-[95%] mx-auto">
+            <Image 
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+                width={500}
+                height={500}
+                className="m-5"
+            />
+            <div className="m-5">
+                <div className="flex">
+                    <h1 className="text-4xl">{movie.title}</h1>
+                    <span className="text-3xl ml-5">({movie.release_date})</span>
                 </div>
-            </div>    
-        </>
+                <div className="flex text-xl">
+                    <p>{movie.runtime}분</p>
 
+                </div>
+                <p>줄거리:{movie.overview}</p>
+                
+            </div>
+        </div>    
     )
 }

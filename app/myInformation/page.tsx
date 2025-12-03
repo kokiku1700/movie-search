@@ -1,7 +1,9 @@
 "use client";
 
 import ChangeModal from "@/components/ChangeModal";
+import Logo from "@/components/Logo";
 import ModalButton from "@/components/ModalButton";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Information = {
@@ -17,7 +19,8 @@ export default function MyInformation () {
     });
     const [modalState, setModalState] = useState(false);
     const [modalType, setModalType] = useState("");
-    
+    const router = useRouter();
+
     useEffect(() => {
         const id = localStorage.getItem("id") ?? "";
         const nickname = localStorage.getItem("nickname") ?? "";
@@ -28,10 +31,29 @@ export default function MyInformation () {
     const onSaveInfo = (e: Information) => {
         setInformation(e);
     };
-
+    // 닉네임 혹은 비밀번호 변경 버튼 클릭 시 
+    // 수정할 수 있는 모달창 열림
+    // 이 함수는 모달이 열렸을 때 취소 버튼에서도 동작한다.
+    // 때문에 매개변수가 필수가 아니게 작성했다. 
     const modalToggle = ( type?: string ) => {
         setModalType(type || "");
         setModalState(!modalState);
+    };
+    // 회원탈퇴 함수
+    const onUnregister = async() => {
+        const result = confirm("정말 탈퇴하시겠습니까?");
+
+        if ( result ) {
+            await fetch('/api/unregister', {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    id: information.id
+                })
+            });
+            localStorage.clear();
+            router.replace('/');
+        };
     };
 
     return (
@@ -39,21 +61,23 @@ export default function MyInformation () {
             <section className="
                 w-[40%] mx-auto mt-20 p-10
                 rounded-lg bg-gray-500">
+                <div className="text-center mt-5 mb-5 pb-5 border-b">
+                    <Logo />
+                </div>
                 <div className="flex items-center">
-                    <h3>아이디</h3>
-                    <span>{information.id}</span>
+                    <h3 className="text-2xl m-5">아이디 :</h3>
+                    <span className="text-xl">{information.id}</span>
                 </div>
-                <div className="flex">
-                    <h3>닉네임</h3>
-                    <span>{information.nickname}</span>
-                    <ModalButton content="닉네임 변경" name="nickcname" onClick={() => modalToggle("nickname")} />
+                <div className="flex items-center">
+                    <h3 className="text-2xl m-5">닉네임 :</h3>
+                    <span className="text-xl">{information.nickname}</span>
+                    <ModalButton content="변경" name="nickcname" onClick={() => modalToggle("nickname")} color="black" />
                 </div>
-                <div className="flex w-[30%]">
-                    <ModalButton content="비밀번호 변경" name="password" onClick={() => modalToggle("password")} />
+                <div className="flex w-full items-center">
+                    <h3 className="text-2xl ml-5 my-5">비밀번호 :</h3>
+                    <ModalButton content="변경" name="password" onClick={() => modalToggle("password")} color="black" />
                 </div>
-                <div className="w-[30%]">
-                    <ModalButton content="회원탈퇴" />
-                </div>
+                <ModalButton content="회원탈퇴" onClick={onUnregister} color="black" />
             </section>
             {modalState && <ChangeModal modalType={modalType} id={information.id} nickname={information.nickname} onSave={onSaveInfo} onClick={modalToggle} />}
         </div>
