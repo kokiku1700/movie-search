@@ -2,11 +2,11 @@
 type Props = {
     content: string;
     onClick: () => void;
-    color?: string
-}
+    color?: string;
+    name?: string;
+};
 
-export default function ModalButton ({ content, onClick, color }: Props) {
-
+export default function ModalButton ({ content, onClick, color, name }: Props) {
 
     return (
         <button
@@ -15,6 +15,7 @@ export default function ModalButton ({ content, onClick, color }: Props) {
                 ${color ? "text-red-500" : "text-green-500"}
                 cursor-pointer    
             `}
+            name={name}
             onClick={onClick}
         >
             {content}

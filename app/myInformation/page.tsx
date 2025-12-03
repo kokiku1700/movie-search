@@ -1,7 +1,7 @@
 "use client";
 
-import Button from "@/components/Button";
 import ChangeModal from "@/components/ChangeModal";
+import ModalButton from "@/components/ModalButton";
 import { useEffect, useState } from "react";
 
 type Information = {
@@ -15,7 +15,9 @@ export default function MyInformation () {
         id:"",
         nickname:"",
     });
-
+    const [modalState, setModalState] = useState(false);
+    const [modalType, setModalType] = useState("");
+    
     useEffect(() => {
         const id = localStorage.getItem("id") ?? "";
         const nickname = localStorage.getItem("nickname") ?? "";
@@ -25,6 +27,11 @@ export default function MyInformation () {
 
     const onSaveInfo = (e: Information) => {
         setInformation(e);
+    };
+
+    const modalToggle = ( type?: string ) => {
+        setModalType(type || "");
+        setModalState(!modalState);
     };
 
     return (
@@ -39,15 +46,16 @@ export default function MyInformation () {
                 <div className="flex">
                     <h3>닉네임</h3>
                     <span>{information.nickname}</span>
+                    <ModalButton content="닉네임 변경" name="nickcname" onClick={() => modalToggle("nickname")} />
                 </div>
                 <div className="flex w-[30%]">
-                    <Button content="비밀번호 변경" />
+                    <ModalButton content="비밀번호 변경" name="password" onClick={() => modalToggle("password")} />
                 </div>
                 <div className="w-[30%]">
-                    <Button content="회원탈퇴" />
+                    <ModalButton content="회원탈퇴" />
                 </div>
             </section>
-            <ChangeModal id={information.id} nickname={information.nickname} onSave={onSaveInfo} />
+            {modalState && <ChangeModal modalType={modalType} id={information.id} nickname={information.nickname} onSave={onSaveInfo} onClick={modalToggle} />}
         </div>
     )
 }

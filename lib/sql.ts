@@ -1,6 +1,6 @@
-import postgres from "postgres";
+import postgres, { Sql } from "postgres";
 
-const sql = postgres({
+const sql: Sql = postgres({
     host: process.env.POSTGRES_HOST,
     port: Number(process.env.POSTGRES_PORT),
     database: process.env.POSTGRES_DATABASE,
