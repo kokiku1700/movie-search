@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import heart from "@/public/heart.png";
-import emptyHeart from "@/public/emptyHeart.png";
-import { useLikes } from "@/hooks/useLikes";
 import { Movie } from "@/lib/searchGetMovie";
+import LikeButton from "./LikeButton";
 
 export default function SearchList ( {movies}: {movies:Movie[]}) {
-    const { likeMovies, toggleHeart } = useLikes();
 
     return (
         <>
@@ -31,12 +28,7 @@ export default function SearchList ( {movies}: {movies:Movie[]}) {
                                 className="object-cover"
                             />
                         </Link>
-                        <Image 
-                            src={likeMovies.includes(m.id) ? heart : emptyHeart} 
-                            alt={likeMovies.includes(m.id) ? "heart" : "emptyHeart"}
-                            onClick={() => toggleHeart(m.id)}
-                            className="absolute bottom-[1%] right-[1%] cursor-pointer" 
-                        />
+                        <LikeButton movieId={m.id} />
                     </div>
                 ))}
             </div>   

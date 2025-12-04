@@ -1,6 +1,7 @@
 import Image from "next/image";
+import LikeButton from "@/components/LikeButton";
 
-async function getMovieDetail (id: string) {
+async function getMovieDetail (id: number) {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=ko`;
 
     const options = {
@@ -21,20 +22,23 @@ async function getMovieDetail (id: string) {
 export default async function MovieDetail ({
     params,
 }: {
-    params: Promise<{ id: string }>
+    params: Promise<{ id: number }>
 }) {
     const { id } = await params;
     const movie = await getMovieDetail(id);
 
     return (
         <div className="flex w-[95%] mx-auto">
-            <Image 
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                width={500}
-                height={500}
-                className="m-5"
-            />
+            <div className="relative m-5">
+                <Image 
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    width={500}
+                    height={500}
+                />
+                <LikeButton movieId={Number(id)} />
+            </div>
+
             <div className="m-5">
                 <div className="flex">
                     <h1 className="text-4xl">{movie.title}</h1>

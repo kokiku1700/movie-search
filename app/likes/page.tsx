@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useLikes } from "@/hooks/useLikes";
-import heart from "@/public/heart.png";
-import emptyHeart from "@/public/emptyHeart.png";
 import Link from "next/link";
+import LikeButton from "@/components/LikeButton";
 
 // 영화 각각의 정보의 타입
 interface Movie {
@@ -20,7 +18,6 @@ interface Movie {
 
 export default function Likes () {
     const [movies, setMovies] = useState<Movie[]>([]);
-    const { likeMovies, toggleHeart } = useLikes();
 
     useEffect(() => {
         async function getLikeMovies () {
@@ -65,13 +62,7 @@ export default function Likes () {
                             object-cover cursor-pointer
                             "/>
                     </Link>
-                    
-                    <Image 
-                        src={likeMovies.includes(movie.id) ? heart : emptyHeart} 
-                        alt={likeMovies.includes(movie.id) ? "heart" : "emptyHeart"}
-                        onClick={() => toggleHeart(movie.id)}
-                        className="absolute bottom-[1%] right-[1%] cursor-pointer" 
-                    />                    
+                    <LikeButton movieId={movie.id} />                  
                 </div>
                 
             ))}
