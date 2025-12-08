@@ -7,8 +7,13 @@ import Image from "next/image";
 import heart from "@/public/heart.png";
 import emptyHeart from "@/public/emptyHeart.png";
 
+type Props = {
+    movieId: number;
+    detail?: boolean;
+};
+
 // 좋아요 버튼 
-export default function LikeButton ( { movieId }: {movieId: number} ) {
+export default function LikeButton ( { movieId, detail }: Props ) {
     const [storageId, setStorageId] = useState<string | null>("");
 
     const { data: likeMovies } = useLikeMoviesQuery(storageId);
@@ -28,7 +33,7 @@ export default function LikeButton ( { movieId }: {movieId: number} ) {
                 src={isLiked ? heart : emptyHeart} 
                 alt={isLiked ? "heart" : "emptyHeart"}
                 onClick={() => toggleLike(movieId)}
-                className="absolute bottom-[1%] right-[1%] cursor-pointer" 
+                className={detail ? "cursor-pointer" : "absolute bottom-[1%] right-[1%] cursor-pointer"} 
             /> 
         </div>
 
