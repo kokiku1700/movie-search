@@ -7,6 +7,7 @@ import Image from "next/image";
 import heart from "@/public/heart.png";
 import emptyHeart from "@/public/emptyHeart.png";
 
+// 좋아요 버튼 
 export default function LikeButton ( { movieId }: {movieId: number} ) {
     const [storageId, setStorageId] = useState<string | null>("");
 

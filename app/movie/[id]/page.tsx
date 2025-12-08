@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LikeButton from "@/components/LikeButton";
+import DoughnutChart from "@/components/DoughnutChart";
 
 async function getMovieDetail (id: number) {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=ko`;
@@ -28,29 +29,35 @@ export default async function MovieDetail ({
     const movie = await getMovieDetail(id);
 
     return (
-        <div className="flex w-[95%] mx-auto">
-            <div className="relative m-5">
-                <Image 
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    width={500}
-                    height={500}
-                />
-                <LikeButton movieId={Number(id)} />
-            </div>
-
-            <div className="m-5">
-                <div className="flex">
-                    <h1 className="text-4xl">{movie.title}</h1>
-                    <span className="text-3xl ml-5">({movie.release_date})</span>
+        <div className="w-[95%] mx-auto">
+            <div 
+                className="
+                    relative flex bg-cover p-10 after:content-[''] after:absolute after:inset-0
+                    after:bg-black after:opacity-60"
+                style={{backgroundImage: `url("https://image.tmdb.org/t/p/original${movie.backdrop_path}")`}}>
+                <div className="relative m-5 z-10">
+                    <Image 
+                        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                        alt={movie.title}
+                        width={500}
+                        height={500}
+                    />
+                    <LikeButton movieId={Number(id)} />
                 </div>
-                <div className="flex text-xl">
-                    <p>{movie.runtime}분</p>
 
+                <div className="m-5 z-10">
+                    <div className="flex">
+                        <h1 className="text-4xl">{movie.title}</h1>
+                        <span className="text-3xl ml-5">({movie.release_date})</span>
+                    </div>
+                    <div className="flex text-xl">
+                        <p>{movie.runtime}분</p>
+                        <DoughnutChart voteAverage={movie.vote_average} />
+                        <p>{movie.vote_count}</p>
+                    </div>
+                    <p className="text-lg">{movie.overview}</p>                  
                 </div>
-                <p>줄거리:{movie.overview}</p>
-                
-            </div>
+            </div>   
         </div>    
     )
 }
