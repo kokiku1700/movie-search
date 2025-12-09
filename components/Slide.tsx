@@ -19,7 +19,9 @@ type Props = {
 // 영화 각각의 정보의 타입
 interface Movie {
     id: number;
+    media_type: string;
     title: string;
+    name: string;
     original_title: string;
     backdrop_path: string | null;
     poster_path: string | null;
@@ -36,6 +38,8 @@ export default function MovieSlide ({ url, subject }: Props) {
     // 슬라이드에 사용되는 영화 목록을 저장하는 변수
     const [movies, setMovies] = useState<Movie[]>([]);
 
+    // Swiper.js의 이전 버튼, 다음 버튼을 컨트롤하기 위한 useRef
+    // 각각 커스텀 버튼을 가리킨다.
     const prevRef = useRef<HTMLButtonElement | null>(null);
     const nextRef = useRef<HTMLButtonElement | null>(null);
 
@@ -49,7 +53,7 @@ export default function MovieSlide ({ url, subject }: Props) {
                 }
             });
             const data: Movies = await res.json();
-
+            
             setMovies(data.results);
         }
         getMovieData();
@@ -66,6 +70,7 @@ export default function MovieSlide ({ url, subject }: Props) {
                 spaceBetween={20}
                 slidesPerView="auto"
                 onSwiper={(swiper) => {
+                    
                     setTimeout(() => {
                         if (!swiper.navigation) return;
 
@@ -78,11 +83,11 @@ export default function MovieSlide ({ url, subject }: Props) {
                     });
                 }}
             >
-                {movies.map(movie => (
+                {movies.map((movie, i) => (
                     <SwiperSlide key={movie.id} style={{ width: '200px' }}>
-                        <h2 className="overflow-hidden whitespace-nowrap text-center text-xl">{movie.title || movie.original_title || "없음"}</h2>
+                        <h2 className="overflow-hidden whitespace-nowrap text-center text-xl">{movie.media_type === "movie" ? movie.title : movie.name}</h2>
                         <Link 
-                            href={`/movie/${movie.id}`} 
+                            href={`/media/${movie.media_type}/${movie.id}`} 
                             className="
                                 relative block aspect-[2/3] rounded-lg overflow-hidden
                                 hover:border-2
@@ -91,10 +96,12 @@ export default function MovieSlide ({ url, subject }: Props) {
                                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                 alt={movie.title || movie.original_title || "없음"}
                                 fill
+                                sizes="200px"
                                 className="object-cover"
+                                priority={i === 0}
                             />
                         </Link>
-                        <LikeButton movieId={movie.id} />
+                        <LikeButton movieId={movie.id} mediaType={movie.media_type} />
                     </SwiperSlide>
                 ))}
             </Swiper>

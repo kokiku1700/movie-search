@@ -14,6 +14,7 @@ interface Movie {
     poster_path: string | null;
     overview: string;
     release_date: string;
+    media_type: string;
 }
 
 export default function Likes () {
@@ -62,7 +63,7 @@ export default function Likes () {
                             object-cover cursor-pointer
                             "/>
                     </Link>
-                    <LikeButton movieId={movie.id} />                  
+                    <LikeButton movieId={movie.id} mediaType={movie.media_type} />                  
                 </div>
                 
             ))}

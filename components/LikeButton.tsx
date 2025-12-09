@@ -9,15 +9,19 @@ import emptyHeart from "@/public/emptyHeart.png";
 
 type Props = {
     movieId: number;
+    mediaType: string;
     detail?: boolean;
 };
 
 // 좋아요 버튼 
-export default function LikeButton ( { movieId, detail }: Props ) {
+// detail은 메인 페이지, 좋아요, 검색 목록의 영화들과 
+// 상세페이지의 차이를 두기 위해서 전달했다.
+// 상세페이지는 absolute로 고정할 필요가 없기 때문이다.
+export default function LikeButton ( { movieId, mediaType, detail }: Props ) {
     const [storageId, setStorageId] = useState<string | null>("");
 
-    const { data: likeMovies } = useLikeMoviesQuery(storageId);
-    const { mutate: toggleLike } = useToggleLikeMutation(storageId);
+    const { data: likeMovies } = useLikeMoviesQuery(storageId, mediaType);
+    const { mutate: toggleLike } = useToggleLikeMutation(storageId, mediaType);
 
     const isLiked = likeMovies?.includes(movieId);
 

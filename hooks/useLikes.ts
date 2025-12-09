@@ -20,17 +20,17 @@ export function useLikes () {
     }, []);
 
     // 좋아요 클릭 시 하트 이미지 변화 함수
-    async function toggleHeart ( movieId: number) {
+    async function toggleHeart ( movieId: number, mediaType: string) {
         const id = localStorage.getItem("id");
 
         if ( id ) {
             if ( likeMovies.includes(movieId) ) {
-                await fetch(`/api/likes?user_id=${id}&movie_id=${movieId}`, {method: "DELETE"});
+                await fetch(`/api/likes?user_id=${id}&movie_id=${movieId}&media_type${mediaType}`, {method: "DELETE"});
                 setLikeMovies(prev => prev.filter(id => id !== movieId));
             } else {
                 await fetch('/api/likes', {
                     method: "POST",
-                    body: JSON.stringify({ action: "postLikeMovies", user: {user_id: id, movie_id: movieId}}),
+                    body: JSON.stringify({ action: "postLikeMovies", user: {user_id: id, movie_id: movieId, media_type: mediaType}}),
                 });
                 setLikeMovies(prev => [...prev, movieId]);
             };

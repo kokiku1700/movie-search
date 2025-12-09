@@ -6,12 +6,13 @@ export async function POST ( req: Request ) {
     const body = await req.json();
     const user_id = body.user.user_id;
     const movie_id = body.user.movie_id;
-    
+    const media_type = body.user.media_type;
+
     switch ( body.action ) {
         // 데이터베이스에서 좋아요 누른 영화 목록을 불러온다.
         case "getLikeMovies":
             const result = await sql`
-                select movie_id
+                select movie_id, media_type
                 from likes
                 where user_id = ${user_id};
             `;
@@ -27,8 +28,8 @@ export async function POST ( req: Request ) {
             // on confilict do nothing
             // 이미 데이터베이스에 값이 있다면 무시한다.
             await sql`
-                insert into likes (user_id, movie_id)
-                values(${user_id}, ${movie_id})
+                insert into likes (user_id, movie_id, media_type)
+                values(${user_id}, ${movie_id}, ${media_type})
                 on conflict do nothing;
             `;
             return new Response(JSON.stringify({ success: true }));
@@ -41,11 +42,13 @@ export async function DELETE ( req: Request ) {
     const { searchParams } = new URL(req.url);
     const user_id = searchParams.get("user_id");
     const movie_id = searchParams.get("movie_id");
-
+    const media_type = searchParams.get("media_type");
     await sql`
         delete from likes
-        where user_id = ${user_id} and movie_id = ${Number(movie_id)};
+        where user_id = ${user_id} 
+        and movie_id = ${Number(movie_id)} 
+        and media_type = ${media_type};
     `;
 
     return new Response(JSON.stringify({ success: true }))
-}
+};

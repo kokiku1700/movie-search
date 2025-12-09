@@ -3,8 +3,8 @@ import LikeButton from "@/components/LikeButton";
 import DoughnutChart from "@/components/DoughnutChart";
 
 // 영화 id로 영화 상세 정보를 불러오는 함수
-async function getMovieDetail (id: number) {
-    const url = `https://api.themoviedb.org/3/movie/${id}?language=ko`;
+async function getMovieDetail (id: number, type: string) {
+    const url = `https://api.themoviedb.org/3/${type}/${id}?language=ko`;
     const options = {
         method: "GET",
         headers: {
@@ -20,8 +20,8 @@ async function getMovieDetail (id: number) {
 };
 
 // 영화 id로 출연진 및 감독 정보를 불러오는 함수
-async function getCredits (id: number) {
-    const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=ko-kr`;
+async function getCredits (id: number, type: string) {
+    const url = `https://api.themoviedb.org/3/${type}/${id}/credits?language=ko-kr`;
     const options = {
         method: "GET",
         headers: {
@@ -37,8 +37,8 @@ async function getCredits (id: number) {
 };
 
 // 영화 id로 영상 불러로는 함수
-async function getVideos (id: number) {
-    const url = `https://api.themoviedb.org/3/movie/${id}/videos?language=ko-kr`;
+async function getVideos (id: number, type: string) {
+    const url = `https://api.themoviedb.org/3/${type}/${id}/videos?language=ko-kr`;
     const options = {
         method: "GET",
         headers: {
@@ -56,15 +56,15 @@ async function getVideos (id: number) {
 export default async function MovieDetail ({
     params,
 }: {
-    params: Promise<{ id: number }>
+    params: Promise<{ id: number, type: string }>
 }) {
-    const { id } = await params;
+    const { id, type } = await params;
     // 영화 상세 정보
-    const movie = await getMovieDetail(id);
+    const media = await getMovieDetail(id, type);
     // 출연진 및 감독
-    const credits = await getCredits(id);
+    const credits = await getCredits(id, type);
     // 영상
-    const videos = await getVideos(id);
+    const videos = await getVideos(id, type);
 
     return (
         <div className="w-[95%] mx-auto">
@@ -73,11 +73,11 @@ export default async function MovieDetail ({
                     relative flex bg-cover p-20 overflow-hidden rounded-xl
                     after:content-[''] after:absolute after:inset-0
                     after:bg-black after:opacity-70"
-                style={{backgroundImage: `url("https://image.tmdb.org/t/p/original${movie.backdrop_path}")`}}>
+                style={{backgroundImage: `url("https://image.tmdb.org/t/p/original${media.backdrop_path}")`}}>
                 <div className="relative m-5 z-10">
                     <Image 
-                        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                        alt={movie.title}
+                        src={`https://image.tmdb.org/t/p/original${media.poster_path}`}
+                        alt={media.media_type === "movie" ? media.title : media.name}
                         width={500}
                         height={500}
                     />
@@ -85,18 +85,37 @@ export default async function MovieDetail ({
 
                 <div className="m-5 z-10">
                     <div className="flex">
-                        <h1 className="text-4xl font-bold">{movie.title}</h1>
-                        <span className="text-3xl ml-5 font-semibold">({movie.release_date})</span>
+                        <h1 className="text-4xl font-bold">{media.media_type === "movie" ? media.title : media.name}</h1>
+                        <span className="text-3xl ml-5 font-semibold">({media.media_type === "movie" ? media.release_date : media.first_air_date})</span>
                     </div>
                     <div className="flex items-center gap-5 text-xl relative">
-                        <p className="font-semibold">상영 시간 : {movie.runtime}분</p>
-                        <DoughnutChart voteAverage={movie.vote_average} />
-                        <p>{movie.vote_count}</p>
-                        <LikeButton movieId={Number(id)} detail={true} />
+                        {type === "movie" 
+                            ?
+                            <span className="font-semibold">상영 시간 : {media.runtime}분 {media.episode_run_time}</span>
+                            :
+                            <span className="font-semibold">시즌{media.number_of_seasons} (총 {media.number_of_episodes}편)</span>
+                        }
+                        <DoughnutChart voteAverage={media.vote_average} />
+                        <p>{media.vote_count}</p>
+                        <LikeButton movieId={Number(id)} mediaType={media.media_type} detail={true} />
                     </div>
-                    <p className="text-lg font-light">{movie.overview}</p>                  
+                    <p className="text-lg font-light">{media.overview}</p>                  
                     <div className="my-5 text-xl">
-                        <span>감독 : {credits.crew.find((person: any) => person.job === "Director")?.name}</span>
+                        {media.media_type === "movie"
+                            ?
+                            <span>감독 : {credits.crew.find((person: any) => person.job === "Director")?.name}</span>
+                            :
+                            <div className="flex flex-col">
+                                <span className="text-xl font-semibold">작가</span>
+                                <div>
+                                    {media.created_by?.map((people: any) => (
+                                        <span key={people.id} className="mr-10">
+                                            {people.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
