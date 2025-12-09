@@ -3,6 +3,7 @@ import { useState } from "react";
 type Input = {
     type: string;
     value: string;
+    kind?: string;
     onChange: (value: string) => void;
     onValidate?: (isvalid: boolean) => void;
     validate?: (value: string, pwCheck?: {password?: string}) => boolean;
@@ -10,7 +11,7 @@ type Input = {
     placeholder?: string;
 }
 
-export default function Input ({type, value, onChange, onValidate, pwValue, validate, placeholder }: Input) {
+export default function Input ({type, value, kind, onChange, onValidate, pwValue, validate, placeholder }: Input) {
     // border 색을 컨트롤하기 위한 변수
     const [valid, setValid] = useState<boolean | null>(null);
     
@@ -19,32 +20,34 @@ export default function Input ({type, value, onChange, onValidate, pwValue, vali
 
         onChange(val);
 
-        let isValid = true;
+        if ( kind === "signup" ) {
+            let isValid = true;
 
-        // 비밀번호와 비밀번호 확인을 비교하기 위한 코드
-        if ( validate ) {
-            isValid = validate(val, pwValue);
-        };
+            // 비밀번호와 비밀번호 확인을 비교하기 위한 코드
+            if ( validate ) {
+                isValid = validate(val, pwValue);
+            };
 
-        // 닉네임과 아이디의 중복을 체크하는 코드
-        try {
-            let apiUrl = "";
+            // 닉네임과 아이디의 중복을 체크하는 코드
+            try {
+                let apiUrl = "";
 
-            if ( type === "name" ) apiUrl = `/api/check_nickname?nickname=${val}`;
-            else if ( type === "id" ) apiUrl = `/api/check_id?id=${val}`;
-            
-            if ( apiUrl ) {
-                const res = await fetch(apiUrl);
-                const data = await res.json();
+                if ( type === "name" ) apiUrl = `/api/check_nickname?nickname=${val}`;
+                else if ( type === "id" ) apiUrl = `/api/check_id?id=${val}`;
                 
-                if ( data.success ) isValid = false;
+                if ( apiUrl ) {
+                    const res = await fetch(apiUrl);
+                    const data = await res.json();
+                    
+                    if ( data.success ) isValid = false;
+                }
+            } catch ( err ) {
+                console.log(err);
+                isValid = false;
             }
-        } catch ( err ) {
-            console.log(err);
-            isValid = false;
+            setValid(isValid);
+            onValidate?.(isValid);
         }
-        setValid(isValid);
-        onValidate?.(isValid);
     }
 
     return (

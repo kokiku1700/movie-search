@@ -2,6 +2,7 @@ import Image from "next/image";
 import LikeButton from "@/components/LikeButton";
 import DoughnutChart from "@/components/DoughnutChart";
 
+// 영화 id로 영화 상세 정보를 불러오는 함수
 async function getMovieDetail (id: number) {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=ko`;
     const options = {
@@ -18,6 +19,7 @@ async function getMovieDetail (id: number) {
     return res.json();
 };
 
+// 영화 id로 출연진 및 감독 정보를 불러오는 함수
 async function getCredits (id: number) {
     const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=ko-kr`;
     const options = {
@@ -34,14 +36,35 @@ async function getCredits (id: number) {
     return res.json();
 };
 
+// 영화 id로 영상 불러로는 함수
+async function getVideos (id: number) {
+    const url = `https://api.themoviedb.org/3/movie/${id}/videos?language=ko-kr`;
+    const options = {
+        method: "GET",
+        headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
+        }
+    };
+    const res = await fetch(url, options);
+
+    if ( !res.ok ) throw new Error("영상을 불러올 수 없습니다.");
+
+    return res.json();
+};
+
 export default async function MovieDetail ({
     params,
 }: {
     params: Promise<{ id: number }>
 }) {
     const { id } = await params;
+    // 영화 상세 정보
     const movie = await getMovieDetail(id);
+    // 출연진 및 감독
     const credits = await getCredits(id);
+    // 영상
+    const videos = await getVideos(id);
 
     return (
         <div className="w-[95%] mx-auto">
@@ -81,8 +104,8 @@ export default async function MovieDetail ({
                 <h1 className="text-3xl my-5">출연진</h1>
                 <div className="flex gap-5">
                     {credits.cast.map((c: any) => (
-                        <div key={c.id}>
-                            <span>{c.name}</span>
+                        <div key={c.id} className="w-[200px] overflow-hidden">
+                            <h3 className="whitespace-nowrap truncate">{c.name}</h3>
                             <Image 
                                 src={`https://image.tmdb.org/t/p/original${c.profile_path}`}
                                 alt={c.name}
@@ -92,6 +115,19 @@ export default async function MovieDetail ({
                     )).slice(0, 7)}
                 </div>
             </div>   
+            <div>
+                <h1 className="text-3xl my-5">동영상</h1>
+                <div className="flex overflow-x-auto">
+                    {videos.results.map((video:any) => (
+                        <iframe 
+                            key={video.id}
+                            width="40%"
+                            height="400px"
+                            src={`https://www.youtube.com/embed/${video.key}`}
+                            allowFullScreen />
+                    ))}
+                </div>
+            </div>
         </div>    
     )
 }

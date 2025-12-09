@@ -58,22 +58,22 @@ export default function SignUp () {
         ">
             <h1 onClick={onClick} className="text-2xl text-black m-5">회원가입</h1>
             <Input 
-                type="name" value={nickname} 
+                type="name" value={nickname} kind="signup"
                 onChange={setNickname} 
                 validate={v => /^[가-힣]{2,12}$/.test(v)} 
                 onValidate={isValid => setValids(prev => ({...prev, nickname: isValid}))}
                 placeholder="닉네임을 입력해주세요"/>
-            <Input type="id" value={id} 
+            <Input type="id" value={id} kind="signup" 
                 onChange={setId} 
                 validate={v => /^[a-z0-9]{6,16}$/.test(v)} 
                 onValidate={isValid => setValids(prev => ({...prev, id: isValid}))}
                 placeholder="아이디를 입력해주세요"/>
-            <Input type="password" value={password} 
+            <Input type="password" value={password} kind="signup" 
                 onChange={setPassword} 
                 validate={v => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/.test(v)} 
                 onValidate={isValid => setValids(prev => ({...prev, password: isValid}))}
                 placeholder="비밀번호를 입력해주세요"/>
-            <Input type="password" value={passwordCheck} 
+            <Input type="password" value={passwordCheck} kind="signup" 
                 onChange={setPasswordCheck} 
                 pwValue={{password}} 
                 onValidate={isValid => setValids(prev => ({...prev, passwordCheck: isValid}))}
