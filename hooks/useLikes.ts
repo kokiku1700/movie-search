@@ -14,6 +14,7 @@ export function useLikes () {
             });
             const data = await res.json();
             setLikeMovies(data.likes ?? []);
+            console.log(data.likes)
         };
 
         getLikes();

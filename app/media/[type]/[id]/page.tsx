@@ -13,7 +13,7 @@ async function getMovieDetail (id: number, type: string) {
         }
     };
     const res = await fetch(url, options);
-
+    
     if ( !res.ok ) throw new Error("영화 정보를 불러올 수 없습니다.");
 
     return res.json();
@@ -77,7 +77,7 @@ export default async function MovieDetail ({
                 <div className="relative m-5 z-10">
                     <Image 
                         src={`https://image.tmdb.org/t/p/original${media.poster_path}`}
-                        alt={media.media_type === "movie" ? media.title : media.name}
+                        alt={media.title || media.name}
                         width={500}
                         height={500}
                     />
@@ -85,8 +85,8 @@ export default async function MovieDetail ({
 
                 <div className="m-5 z-10">
                     <div className="flex">
-                        <h1 className="text-4xl font-bold">{media.media_type === "movie" ? media.title : media.name}</h1>
-                        <span className="text-3xl ml-5 font-semibold">({media.media_type === "movie" ? media.release_date : media.first_air_date})</span>
+                        <h1 className="text-4xl font-bold">{type === "movie" ? media.title : media.name}</h1>
+                        <span className="text-3xl ml-5 font-semibold">({type === "movie" ? media.release_date : media.first_air_date})</span>
                     </div>
                     <div className="flex items-center gap-5 text-xl relative">
                         {type === "movie" 
@@ -97,18 +97,18 @@ export default async function MovieDetail ({
                         }
                         <DoughnutChart voteAverage={media.vote_average} />
                         <p>{media.vote_count}</p>
-                        <LikeButton movieId={Number(id)} mediaType={media.media_type} detail={true} />
+                        <LikeButton movieId={Number(id)} mediaType={type} detail={true} />
                     </div>
                     <p className="text-lg font-light">{media.overview}</p>                  
                     <div className="my-5 text-xl">
-                        {media.media_type === "movie"
+                        {type === "movie"
                             ?
                             <span>감독 : {credits.crew.find((person: any) => person.job === "Director")?.name}</span>
                             :
                             <div className="flex flex-col">
                                 <span className="text-xl font-semibold">작가</span>
                                 <div>
-                                    {media.created_by?.map((people: any) => (
+                                    {media.created_by.map((people: any) => (
                                         <span key={people.id} className="mr-10">
                                             {people.name}
                                         </span>

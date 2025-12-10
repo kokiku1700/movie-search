@@ -23,7 +23,7 @@ export default function LikeButton ( { movieId, mediaType, detail }: Props ) {
     const { data: likeMovies } = useLikeMoviesQuery(storageId, mediaType);
     const { mutate: toggleLike } = useToggleLikeMutation(storageId, mediaType);
 
-    const isLiked = likeMovies?.includes(movieId);
+    const isLiked = likeMovies?.some(([id, type]:[number, string]) => id === movieId && type === mediaType);
 
     useEffect(() => {
         const id = localStorage.getItem("id");

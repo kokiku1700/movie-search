@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+type LikeMovie = [number, string];
+
 // 좋아요 토글 기능
 export function useToggleLikeMutation ( userId: string | null, mediaType: string) {
     const queryClient = useQueryClient();
@@ -7,10 +9,13 @@ export function useToggleLikeMutation ( userId: string | null, mediaType: string
     return useMutation({
         mutationFn: async ( mediaId: number ) => {
             // getQueryData는 캐싱된 값들을 해당 키를 가져온다.
-            const likeMovies: number[] = queryClient.getQueryData(["likeMovies", userId, mediaType]) || [];
-            
-            if ( likeMovies.includes(mediaId) ) {
-                await fetch(`/api/likes?user_id=${userId}&movie_id=${mediaId}`, {
+            const likeMovies = queryClient.getQueryData<LikeMovie[]>(["likeMovies", userId, mediaType]) || [];
+            const isLiked = likeMovies.some(([id, type]:[number, string]) => {
+                return id === mediaId && type === mediaType
+            });
+            console.log(mediaId, mediaType)
+            if ( isLiked ) {
+                await fetch(`/api/likes?user_id=${userId}&movie_id=${mediaId}&media_type=${mediaType}`, {
                     method: "DELETE",
                 });
             } else {

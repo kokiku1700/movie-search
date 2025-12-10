@@ -1,6 +1,6 @@
 import sql from "@/lib/sql";
 
-type LikeRow = {movie_id: number};
+type LikeRow = {movie_id: number, media_type: string};
 
 export async function POST ( req: Request ) {
     const body = await req.json();
@@ -20,7 +20,7 @@ export async function POST ( req: Request ) {
             // 예를 들면 [{movie_id: 1}, {movie_id: 2} ...] 이런 식으로
             // 타입을 지정해줘야 되는데 일반적인 방법으로 안돼서 
             // result 타입을 unknown으로 변환 후 타입을 지정했다.
-            const likes = ((result as unknown) as LikeRow[]).map(e => e.movie_id);
+            const likes = ((result as unknown) as LikeRow[]).map(e => [e.movie_id, e.media_type]);
             return new Response(JSON.stringify({ likes }));
         
         // 좋아요를 누르면 데이터베이스로 아이디와 영화 아이디를 보낸다.

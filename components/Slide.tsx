@@ -15,18 +15,19 @@ import prev from "@/public/prev.png";
 type Props = {
     url: string;
     subject: string;
+    mediaType?: string;
 }
 // 영화 각각의 정보의 타입
 interface Movie {
     id: number;
-    media_type: string;
-    title: string;
-    name: string;
-    original_title: string;
+    media_type?: string;
+    title?: string;
+    name?: string;
+    original_title?: string;
     backdrop_path: string | null;
     poster_path: string | null;
     overview: string;
-    release_date: string;
+    release_date?: string;
 }
 
 interface Movies {
@@ -34,7 +35,7 @@ interface Movies {
 }
 
 
-export default function MovieSlide ({ url, subject }: Props) {
+export default function MovieSlide ({ url, subject, mediaType }: Props) {
     // 슬라이드에 사용되는 영화 목록을 저장하는 변수
     const [movies, setMovies] = useState<Movie[]>([]);
 
@@ -46,16 +47,21 @@ export default function MovieSlide ({ url, subject }: Props) {
     // 전달 받은 url로 작품 목록을 받아온다.
     useEffect(() => {
         async function getMovieData () {
-            const res =  await fetch(`https://api.themoviedb.org/3/${url}`, {
+            const res =  await fetch(`https://api.themoviedb.org/3/${mediaType ? mediaType : ""}${url}`, {
                 headers: {
                     accept: 'application/json',
                     Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
                 }
             });
             const data: Movies = await res.json();
-            
-            setMovies(data.results);
+            const result = data.results.map(item => ({
+                ...item,
+                media_type: item.media_type || mediaType,
+            }));
+
+            setMovies(result);
         }
+        
         getMovieData();
     }, []);
 
@@ -85,23 +91,23 @@ export default function MovieSlide ({ url, subject }: Props) {
             >
                 {movies.map((movie, i) => (
                     <SwiperSlide key={movie.id} style={{ width: '200px' }}>
-                        <h2 className="overflow-hidden whitespace-nowrap text-center text-xl">{movie.media_type === "movie" ? movie.title : movie.name}</h2>
+                        <h2 className="overflow-hidden whitespace-nowrap text-center text-xl">{movie.title || movie.name}</h2>
                         <Link 
-                            href={`/media/${movie.media_type}/${movie.id}`} 
+                            href={`/media/${mediaType || movie.media_type}/${movie.id}`} 
                             className="
                                 relative block aspect-[2/3] rounded-lg overflow-hidden
                                 hover:border-2
                             ">
                             <Image
                                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                alt={movie.title || movie.original_title || "없음"}
+                                alt={movie.title || movie.name || "poster"}
                                 fill
                                 sizes="200px"
                                 className="object-cover"
                                 priority={i === 0}
                             />
                         </Link>
-                        <LikeButton movieId={movie.id} mediaType={movie.media_type} />
+                        <LikeButton movieId={movie.id} mediaType={movie.media_type || "movie"} />
                     </SwiperSlide>
                 ))}
             </Swiper>
