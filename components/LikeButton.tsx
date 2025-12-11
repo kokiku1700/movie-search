@@ -37,7 +37,7 @@ export default function LikeButton ( { movieId, mediaType, detail }: Props ) {
                 src={isLiked ? heart : emptyHeart} 
                 alt={isLiked ? "heart" : "emptyHeart"}
                 onClick={() => toggleLike(movieId)}
-                className={detail ? "cursor-pointer" : "absolute bottom-[1%] right-[1%] cursor-pointer"} 
+                className={detail ? "cursor-pointer z-100" : "absolute bottom-[1%] right-[1%] cursor-pointer z-100"} 
             /> 
         </div>
 

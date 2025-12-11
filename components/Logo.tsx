@@ -11,7 +11,9 @@ export default function Logo ({ loc }: Props) {
             href={"/"}
             className={`
                 text-5xl cursor-pointer
-                ${loc && "text-black"}    
+                ${loc && "text-black"} 
+                hover:text-shadow-lg
+                hover:text-shadow-sky-500   
             `}
         >
             D.MS

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "D.MS",
@@ -14,9 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>
+      <body className="min-h-screen flex flex-col">
         <ReactQueryProvider>
-          {children}
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
         </ReactQueryProvider>
       </body>
     </html>

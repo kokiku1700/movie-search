@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
     title: "D.MS 영화 목록",
@@ -12,6 +13,7 @@ export default function RootLayout ({
 }>) {
     return (
         <>
+            <Header />
             {children}
         </>
     )

@@ -1,18 +1,20 @@
-export interface Movie {
+export interface Media {
     id: number;
-    title: string;
-    backdrop_path: string | null;
-    poster_path: string | null;
+    title?: string;
+    name?: string;
+    backdrop_path: string;
+    poster_path: string;
     overview: string;
     release_date: string;
+    media_type: string;
 };
 
 interface SearchMovie {
-    results: Movie[];
+    results: Media[];
 }
 
-export async function getMovies ( query: string ): Promise<Movie[]> {
-    const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&language=ko&page=1`, {
+export async function getMovies ( query: string ): Promise<Media[]> {
+    const res = await fetch(`https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=ko-kr&page=1`, {
         headers: {
             accept: 'application/json',
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`

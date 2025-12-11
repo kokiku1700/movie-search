@@ -14,9 +14,7 @@ export default function SearchButton ( {keyword}: Props ) {
         if ( keyword !== "" ) {
             if ( pathname === "/list") router.replace(`/list?q=${keyword}`, undefined, {shallow: true});
             else router.push(`/list?q=${keyword}`);
-        } else {
-            console.log("제목을 입력해주세요!!")
-        }
+        };
     };
 
     return (

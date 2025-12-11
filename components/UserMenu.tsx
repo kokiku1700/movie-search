@@ -26,14 +26,14 @@ export default function UserMenu () {
         <>
             {userNickname ? 
                 <div className="w-full flex justify-center gap-4">
-                    <Link href={"/likes"}>좋아요</Link>
-                    <Link href={'/myInformation'}>{userNickname} 님</Link>
-                    <span onClick={handleLogout} className="cursor-pointer">로그아웃</span>
+                    <Link href={"/likes"} className="hover:text-sky-500">좋아요</Link>
+                    <Link href={'/myInformation'} className="hover:text-sky-500">{userNickname} 님</Link>
+                    <span onClick={handleLogout} className="cursor-pointer hover:text-sky-500">로그아웃</span>
                 </div>
                 :
                 <div className="w-full flex justify-center">
-                    <Link href={"/login"} className="mx-2 px-2 whitespace-nowrap">로그인</Link>
-                    <Link href={"/signUp"} className="mx-2 px-2 whitespace-nowrap">회원가입</Link>
+                    <Link href={"/login"} className="mx-2 px-2 whitespace-nowrap hover:text-sky-500">로그인</Link>
+                    <Link href={"/signUp"} className="mx-2 px-2 whitespace-nowrap hover:text-sky-500">회원가입</Link>
                 </div>
             }
         </> 

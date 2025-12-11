@@ -25,6 +25,8 @@ export default function SearchBar ({search, setSearch}: Props) {
                 p-3 pl-10 pr-17 m-5
                 bg-gray-200
                 focus:outline-none
+                focus:ring-3
+                focus:ring-sky-500
             "
         />
     )

@@ -13,7 +13,7 @@ export function useToggleLikeMutation ( userId: string | null, mediaType: string
             const isLiked = likeMovies.some(([id, type]:[number, string]) => {
                 return id === mediaId && type === mediaType
             });
-            console.log(mediaId, mediaType)
+            
             if ( isLiked ) {
                 await fetch(`/api/likes?user_id=${userId}&movie_id=${mediaId}&media_type=${mediaType}`, {
                     method: "DELETE",

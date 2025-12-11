@@ -4,12 +4,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/navigation';
-import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import LikeButton from "./LikeButton";
 import next from "@/public/next.png";
 import prev from "@/public/prev.png";
+import PosterCard from "./PosterCard";
 
 // 전달 받은 tmdb api와 슬라이드 제목의 타입
 type Props = {
@@ -23,9 +22,8 @@ interface Movie {
     media_type?: string;
     title?: string;
     name?: string;
-    original_title?: string;
-    backdrop_path: string | null;
-    poster_path: string | null;
+    backdrop_path: string;
+    poster_path: string;
     overview: string;
     release_date?: string;
 }
@@ -75,8 +73,7 @@ export default function MovieSlide ({ url, subject, mediaType }: Props) {
                 modules={[Navigation]}
                 spaceBetween={20}
                 slidesPerView="auto"
-                onSwiper={(swiper) => {
-                    
+                onSwiper={(swiper) => {   
                     setTimeout(() => {
                         if (!swiper.navigation) return;
 
@@ -87,27 +84,15 @@ export default function MovieSlide ({ url, subject, mediaType }: Props) {
                         swiper.navigation.init();
                         swiper.navigation.update();
                     });
-                }}
-            >
+                }}>
                 {movies.map((movie, i) => (
                     <SwiperSlide key={movie.id} style={{ width: '200px' }}>
-                        <h2 className="overflow-hidden whitespace-nowrap text-center text-xl">{movie.title || movie.name}</h2>
-                        <Link 
-                            href={`/media/${mediaType || movie.media_type}/${movie.id}`} 
-                            className="
-                                relative block aspect-[2/3] rounded-lg overflow-hidden
-                                hover:border-2
-                            ">
-                            <Image
-                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                alt={movie.title || movie.name || "poster"}
-                                fill
-                                sizes="200px"
-                                className="object-cover"
-                                priority={i === 0}
-                            />
-                        </Link>
-                        <LikeButton movieId={movie.id} mediaType={movie.media_type || "movie"} />
+                        <PosterCard 
+                            id={movie.id} 
+                            titleAndName={movie.title || movie.name} 
+                            mediaType={movie.media_type || "movie"} 
+                            posterPath={movie.poster_path} 
+                            idx={i} />
                     </SwiperSlide>
                 ))}
             </Swiper>
