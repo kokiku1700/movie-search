@@ -53,6 +53,16 @@ async function getVideos (id: number, type: string) {
     return res.json();
 };
 
+export async function generateMetadata ({ params }: {params: Promise<{ id: number, type: string}> }) {
+    const { id, type } = await params;
+    const media = await getMovieDetail(id, type);
+
+    return {
+        title: `D.MS - ${type === "movie" ? media.title : media.name}`,
+        description: media.overview,   
+    }
+};
+
 export default async function MovieDetail ({
     params,
 }: {
@@ -74,12 +84,13 @@ export default async function MovieDetail ({
                     after:content-[''] after:absolute after:inset-0
                     after:bg-black after:opacity-70"
                 style={{backgroundImage: `url("https://image.tmdb.org/t/p/original${media.backdrop_path}")`}}>
-                <div className="relative m-5 z-10">
+                <div className="relative m-5 z-10 w-[300px] aspect-[2/3] overflow-hidden block shrink-0">
                     <Image 
                         src={`https://image.tmdb.org/t/p/original${media.poster_path}`}
                         alt={media.title || media.name}
-                        width={500}
-                        height={500}
+                        fill
+                        sizes="600px"
+                        className="object-cover"
                     />
                 </div>
 

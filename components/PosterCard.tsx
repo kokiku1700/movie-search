@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import LikeButton from "./LikeButton";
+import { useState } from "react";
 
 type Props = {
     id: number;
@@ -11,10 +12,11 @@ type Props = {
 }
 
 export default function PosterCard ({id, titleAndName, mediaType, posterPath, idx}: Props) {
+    const [loaded, setLoaded] = useState(false);
 
     return (
         <div className="relative overflow-hidden">
-            <h2 className="overflow-hidden whitespace-nowrap text-center text-xl">{titleAndName}</h2>
+            <h2 className="overflow-hidden truncate whitespace-nowrap text-center text-xl">{titleAndName}</h2>
             <div className="relative group">
                 <span className="
                     absolute inset-0 flex items-center justify-center
@@ -29,13 +31,19 @@ export default function PosterCard ({id, titleAndName, mediaType, posterPath, id
                     className="
                         relative block aspect-[2/3] 
                         rounded-lg overflow-hidden">
+                    {!loaded && (
+                        <div className="absolute inset-0 bg-zinc-700 animate-pulse"></div>
+                    )}
                     <Image
                         src={`https://image.tmdb.org/t/p/w500${posterPath}`}
                         alt={titleAndName || "poster"}
                         fill
                         sizes="200px"
-                        className="object-cover"
                         priority={idx === 0}
+                        className={`
+                            object-cover transition-opacity duration-300
+                            ${loaded ? "opacity-100" : "opacity-0"}`}
+                        onLoad={() => setLoaded(true)}
                     />
                 </Link>
                 <LikeButton movieId={id} mediaType={mediaType} />
