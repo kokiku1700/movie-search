@@ -1,61 +1,13 @@
 import Image from "next/image";
 import LikeButton from "@/components/LikeButton";
 import DoughnutChart from "@/components/DoughnutChart";
+import { getMediaDetail, getCredits, getVideos, getContentRating } from "@/lib/getDetail";
 
-// 영화 id로 영화 상세 정보를 불러오는 함수
-async function getMovieDetail (id: number, type: string) {
-    const url = `https://api.themoviedb.org/3/${type}/${id}?language=ko`;
-    const options = {
-        method: "GET",
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
-        }
-    };
-    const res = await fetch(url, options);
-    
-    if ( !res.ok ) throw new Error("영화 정보를 불러올 수 없습니다.");
-
-    return res.json();
-};
-
-// 영화 id로 출연진 및 감독 정보를 불러오는 함수
-async function getCredits (id: number, type: string) {
-    const url = `https://api.themoviedb.org/3/${type}/${id}/credits?language=ko-kr`;
-    const options = {
-        method: "GET",
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
-        }
-    };
-    const res = await fetch(url, options);
-
-    if ( !res.ok ) throw new Error("스태프 및 출연진을 가져올 수 없습니다.");
-
-    return res.json();
-};
-
-// 영화 id로 영상 불러로는 함수
-async function getVideos (id: number, type: string) {
-    const url = `https://api.themoviedb.org/3/${type}/${id}/videos?language=ko-kr`;
-    const options = {
-        method: "GET",
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
-        }
-    };
-    const res = await fetch(url, options);
-
-    if ( !res.ok ) throw new Error("영상을 불러올 수 없습니다.");
-
-    return res.json();
-};
-
+// metadata의 title을 동적으로 변경
+// 작품명이 title로 나온다. 
 export async function generateMetadata ({ params }: {params: Promise<{ id: number, type: string}> }) {
     const { id, type } = await params;
-    const media = await getMovieDetail(id, type);
+    const media = await getMediaDetail(id, type);
 
     return {
         title: `D.MS - ${type === "movie" ? media.title : media.name}`,
@@ -63,18 +15,20 @@ export async function generateMetadata ({ params }: {params: Promise<{ id: numbe
     }
 };
 
-export default async function MovieDetail ({
+export default async function MediaDetail ({
     params,
 }: {
     params: Promise<{ id: number, type: string }>
 }) {
     const { id, type } = await params;
     // 영화 상세 정보
-    const media = await getMovieDetail(id, type);
+    const media = await getMediaDetail(id, type);
     // 출연진 및 감독
     const credits = await getCredits(id, type);
     // 영상
     const videos = await getVideos(id, type);
+    // 이용가 등급 
+    const contentRating = await getContentRating(id, type);
 
     return (
         <div className="w-[95%] mx-auto">
@@ -99,6 +53,14 @@ export default async function MovieDetail ({
                         <h1 className="text-4xl font-bold">{type === "movie" ? media.title : media.name}</h1>
                         <span className="text-3xl ml-5 font-semibold">({type === "movie" ? media.release_date : media.first_air_date})</span>
                     </div>
+
+                    <div className="flex items-center gap-4 font-semibold mt-5">
+                        <span className="rounded-sm border-1 py-1 px-2">{contentRating}</span>
+                        {media.genres.map(({id, name}: { id: number, name: string }) => (
+                            <span key={id}>{name}</span>
+                        ))}
+                    </div>
+
                     <div className="flex items-center gap-5 text-xl relative">
                         {type === "movie" 
                             ?
@@ -110,7 +72,9 @@ export default async function MovieDetail ({
                         <p>{media.vote_count}</p>
                         <LikeButton movieId={Number(id)} mediaType={type} detail={true} />
                     </div>
+
                     <p className="text-lg font-light">{media.overview}</p>                  
+                    
                     <div className="my-5 text-xl">
                         {type === "movie"
                             ?

@@ -50,20 +50,30 @@ export default function Likes () {
             
             setMovies(moviedata);
         }
+
         getLikeMovies();
     }, []);
 
     return (
-        <div className="w-[95%] mx-auto grid grid-cols-[repeat(auto-fit,minmax(200px,200px))] gap-4">
-            {movies.map((movie, i) => (
-                <PosterCard 
-                    key={movie.id}
-                    id={movie.id} 
-                    titleAndName={movie.title || movie.name} 
-                    mediaType={movie.media_type || "movie"} 
-                    posterPath={movie.poster_path} 
-                    idx={i} />
-            ))}
-        </div>
+        <>
+            {movies.length === 0 
+                ?
+                <div>
+                    {movies.length === 0 && <p className="col-span-full flex justify-center items-center my-50">찜한 작품이 없습니다.</p>}
+                </div>
+                :
+                <div className="w-[95%] mx-auto grid grid-cols-[repeat(auto-fit,minmax(200px,200px))] justify-center gap-4">
+                    {movies.map((movie, i) => (
+                        <PosterCard 
+                            key={movie.id}
+                            id={movie.id} 
+                            titleAndName={movie.title || movie.name} 
+                            mediaType={movie.media_type || "movie"} 
+                            posterPath={movie.poster_path} 
+                            idx={i} />
+                    ))}
+                </div>
+            }
+        </>
     )
 }
