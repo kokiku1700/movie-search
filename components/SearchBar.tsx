@@ -1,21 +1,29 @@
-import { ChangeEvent } from "react"
+import { ChangeEvent, KeyboardEvent } from "react"
 import { Dispatch,SetStateAction } from "react";
 
 type Props = {
     search: string;
     setSearch: Dispatch<SetStateAction<string>>;
+    onEnter: () => void;
 }
 
-export default function SearchBar ({search, setSearch}: Props) {
+export default function SearchBar ({search, setSearch, onEnter}: Props) {
 
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
+    };
+
+    const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if ( e.key === "Enter" ) {
+            onEnter();
+        };
     };
 
     return (
         <input 
             value={search} 
             onChange={onChangeSearch} 
+            onKeyDown={onKeyDown}
             placeholder="제목을 입력해주세요."
             className="
                 w-2/3 rounded-4xl 
