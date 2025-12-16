@@ -1,7 +1,7 @@
 import Image from "next/image";
 import LikeButton from "@/components/LikeButton";
-import DoughnutChart from "@/components/DoughnutChart";
 import { getMediaDetail, getCredits, getVideos, getContentRating } from "@/lib/getDetail";
+import star from "@/public/star.png";
 
 // metadata의 title을 동적으로 변경
 // 작품명이 title로 나온다. 
@@ -55,7 +55,7 @@ export default async function MediaDetail ({
                     </div>
 
                     <div className="flex items-center gap-4 font-semibold mt-5">
-                        <span className="rounded-sm border-1 py-1 px-2">{contentRating}</span>
+                        <span className="rounded-sm border-2 py-1 px-2">{contentRating}</span>
                         {media.genres.map(({id, name}: { id: number, name: string }) => (
                             <span key={id}>{name}</span>
                         ))}
@@ -68,8 +68,11 @@ export default async function MediaDetail ({
                             :
                             <span className="font-semibold">시즌{media.number_of_seasons} (총 {media.number_of_episodes}편)</span>
                         }
-                        <DoughnutChart voteAverage={media.vote_average} />
-                        <p>{media.vote_count}</p>
+                        <div className="flex items-center">
+                            <Image src={star} alt="popular" width={30} />
+                            <span>{media.vote_average.toFixed(1)}</span>
+                            <p>({media.vote_count})</p>
+                        </div>
                         <LikeButton movieId={Number(id)} mediaType={type} detail={true} />
                     </div>
 

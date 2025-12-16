@@ -1,3 +1,5 @@
+// app/media/[type]/[id]에서 사용 중
+
 // 작품 id로 영화 상세 정보를 불러오는 함수
 async function getMediaDetail (id: number, type: string) {
     const url = `https://api.themoviedb.org/3/${type}/${id}?language=ko`;

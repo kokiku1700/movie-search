@@ -19,6 +19,7 @@ export function useToggleLikeMutation ( userId: string | null, mediaType: string
                     method: "DELETE",
                 });
             } else {
+                if ( !userId ) return alert("로그인 후 이용할 수 있습니다.");
                 await fetch("/api/likes", {
                     method: "POST",
                     body: JSON.stringify({
