@@ -44,10 +44,6 @@ export default function SignUp () {
         };  
     };
 
-    const onClick = () => {
-        console.log(valids);
-    }
-
     return (
         <form 
             onSubmit={onSubmit}
@@ -56,7 +52,7 @@ export default function SignUp () {
                 mx-auto pt-10 pb-20 mt-50 rounded-lg 
                 flex flex-col items-center
         ">
-            <h1 onClick={onClick} className="text-2xl text-black m-5">회원가입</h1>
+            <h1 className="text-2xl text-black m-5">회원가입</h1>
             <Input 
                 type="name" value={nickname} kind="signup"
                 onChange={setNickname} 

@@ -11,6 +11,8 @@ export default function Login () {
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
+    const [errorMessage, setErrorMessage] = useState("");
+    const [errorState, setErrorState] = useState(false);
 
     async function onSubmit (e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -27,12 +29,17 @@ export default function Login () {
             router.replace("/");
             localStorage.setItem("nickname", result.user.nickname);
             localStorage.setItem("id", result.user.id);
+            setErrorMessage("");
+            setErrorState(false);
+        } else {
+            setErrorMessage(result.message);
+            setErrorState(true);
         }
     }
 
     return (
         <div className="
-                w-[35%] bg-[#DCDCDC] 
+                w-[40%] bg-[#DCDCDC] 
                 mx-auto pt-10 pb-20 mt-50 rounded-lg    
                 flex flex-col items-center">
             <Logo loc="login" />
@@ -44,6 +51,7 @@ export default function Login () {
                     mt-4">
                 <Input type="id" value={id} onChange={setId} placeholder="아이디"/>
                 <Input type="password" value={password} onChange={setPassword} placeholder="비밀번호"/>
+                <p className={`${errorState ? "block" : "hidden"} text-red-600`}>{errorMessage}</p>
                 <div className="m-3">
                     <Link href={"signUp"} className="text-black">회원가입</Link>
                     <span className="mx-2 cursor-default text-black">|</span>

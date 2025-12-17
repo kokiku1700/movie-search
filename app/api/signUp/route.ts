@@ -17,7 +17,7 @@ export async function POST (req: Request) {
         })
     } catch ( error ) {
         console.error(error);
-        return Response.json({ success: false, message: "회원가입 실패"})
+        return Response.json({ success: false, message: "입력한 정보를 다시 확인해주세요."})
     }
     
 }
