@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type Input = {
     type: string;
@@ -9,15 +9,17 @@ type Input = {
     validate?: (value: string, pwCheck?: {password?: string}) => boolean;
     pwValue?: {password?: string};
     placeholder?: string;
+    setErrorState: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function Input ({type, value, kind, onChange, onValidate, pwValue, validate, placeholder }: Input) {
+export default function Input ({type, value, kind, onChange, setErrorState, onValidate, pwValue, validate, placeholder }: Input) {
     // border 색을 컨트롤하기 위한 변수
     const [valid, setValid] = useState<boolean | null>(null);
     
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
 
+        setErrorState(false);
         onChange(val);
 
         if ( kind === "signup" ) {

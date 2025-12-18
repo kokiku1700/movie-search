@@ -41,23 +41,25 @@ export default function Login () {
         <div className="
                 w-[40%] bg-[#DCDCDC] 
                 mx-auto pt-10 pb-20 mt-50 rounded-lg    
-                flex flex-col items-center">
+                flex flex-col items-center
+                bg-gradient-to-br from-neutral-200 to-neutral-400">
             <Logo loc="login" />
+            <p className="my-2 text-neutral-700">당신의 취향을 기록하는 영화 관리 서비스</p>
             <form 
                 onSubmit={onSubmit}
                 className="
                     w-full
                     flex flex-col items-center
-                    mt-4">
-                <Input type="id" value={id} onChange={setId} placeholder="아이디"/>
-                <Input type="password" value={password} onChange={setPassword} placeholder="비밀번호"/>
+                    mt-2">
+                <Input type="id" value={id} onChange={setId} setErrorState={setErrorState} placeholder="아이디"/>
+                <Input type="password" value={password} onChange={setPassword} setErrorState={setErrorState} placeholder="비밀번호"/>
                 <p className={`${errorState ? "block" : "hidden"} text-red-600`}>{errorMessage}</p>
                 <div className="m-3">
-                    <Link href={"signUp"} className="text-black">회원가입</Link>
+                    <Link href={"signUp"} className="text-black hover:text-sky-500">회원가입</Link>
                     <span className="mx-2 cursor-default text-black">|</span>
-                    <Link href={"id_pw_Find"} className="text-black">아이디 찾기</Link>
+                    <Link href={"id_pw_Find"} className="text-black hover:text-sky-500">아이디 찾기</Link>
                     <span className="mx-2 cursor-default text-black">|</span>
-                    <Link href={"id_pw_Find"} className="text-black">비밀번호 찾기</Link>
+                    <Link href={"id_pw_Find"} className="text-black hover:text-sky-500">비밀번호 찾기</Link>
                 </div>
                 <Button content="로그인" />
             </form>
