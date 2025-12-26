@@ -5,6 +5,7 @@ import Input from "@/components/Input"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react"
+import { validation } from "@/domains/validate";
 
 export default function SignUp () {
     const [nickname, setNickname] = useState("");
@@ -19,6 +20,13 @@ export default function SignUp () {
         password: null as boolean | null,
         passwordCheck: null as boolean | null,
     });
+
+    // 각 input별 에러 상태
+    const [nicknameErrorState, setNickNameErrorState] = useState("");
+    const [idErrorState, setIdErrorState] = useState("");
+    const [passwordErrorState, setPasswordErrorState] = useState("");
+    const [passwordCheckErrorState, setPasswordCheckErrorState] = useState("");
+
     const router = useRouter();
 
     async function onSubmit (e: FormEvent) {
@@ -48,43 +56,63 @@ export default function SignUp () {
         <form 
             onSubmit={onSubmit}
             className="
-                w-[35%] bg-[#DCDCDC] 
-                mx-auto pt-10 pb-20 mt-50 rounded-lg 
+                w-[40%] bg-[#DCDCDC] 
+                mx-auto pt-10 pb-20 mt-30 rounded-lg 
                 flex flex-col items-center
+                bg-gradient-to-br from-neutral-200 to-neutral-400
         ">
             <h1 className="text-2xl text-black m-5">회원가입</h1>
-            <Input 
-                type="name" value={nickname} kind="signup"
-                onChange={setNickname} 
-                validate={v => /^[가-힣]{2,12}$/.test(v)} 
-                onValidate={isValid => setValids(prev => ({...prev, nickname: isValid}))}
-                placeholder="닉네임을 입력해주세요"/>
-            <Input type="id" value={id} kind="signup" 
-                onChange={setId} 
-                validate={v => /^[a-z0-9]{6,16}$/.test(v)} 
-                onValidate={isValid => setValids(prev => ({...prev, id: isValid}))}
-                placeholder="아이디를 입력해주세요"/>
-            <Input type="password" value={password} kind="signup" 
-                onChange={setPassword} 
-                validate={v => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/.test(v)} 
-                onValidate={isValid => setValids(prev => ({...prev, password: isValid}))}
-                placeholder="비밀번호를 입력해주세요"/>
-            <Input type="password" value={passwordCheck} kind="signup" 
-                onChange={setPasswordCheck} 
-                pwValue={{password}} 
-                onValidate={isValid => setValids(prev => ({...prev, passwordCheck: isValid}))}
-                validate={(v, vc) => v === vc?.password} 
-                placeholder="비밀번호를 확인해주세요"/>
+            <div className="w-full flex flex-col items-center ">
+                <div className="w-[60%] flex flex-col">
+                    <Input 
+                        type="name" value={nickname} kind="signup"
+                        onChange={setNickname} 
+                        validate={v => validation.nickname.regex.test(v)} 
+                        onValidate={isValid => setValids(prev => ({...prev, nickname: isValid}))}
+                        setErrorState={setNickNameErrorState}
+                        placeholder="닉네임"/>
+                    <p className="text-black mx-5"><span className="mr-2">※</span>{validation.nickname.guide}</p>
+                </div>
+                <div className="w-[60%] flex flex-col">
+                    <Input type="id" value={id} kind="signup" 
+                        onChange={setId} 
+                        validate={v => validation.id.regex.test(v)} 
+                        onValidate={isValid => setValids(prev => ({...prev, id: isValid}))}
+                        setErrorState={setIdErrorState}
+                        placeholder="아이디"/>
+                    <p className="text-black mx-5"><span className="mr-2">※</span>{validation.id.guide}</p>
+                </div>
+                <div className="w-[60%] flex flex-col">
+                    <Input type="password" value={password} kind="signup" 
+                        onChange={setPassword} 
+                        validate={v => validation.password.regex.test(v)} 
+                        onValidate={isValid => setValids(prev => ({...prev, password: isValid}))}
+                        setErrorState={setPasswordErrorState}
+                        placeholder="비밀번호"/>
+                    <p className="text-black mx-5"><span className="mr-2">※</span>{validation.password.guide}</p>
+                </div>
+                <div className="w-[60%] flex flex-col">
+                    <Input type="password" value={passwordCheck} kind="signup" 
+                        onChange={setPasswordCheck} 
+                        pwValue={{password}} 
+                        onValidate={isValid => setValids(prev => ({...prev, passwordCheck: isValid}))}
+                        validate={(v, vc) => v === vc?.password} 
+                        setErrorState={setPasswordCheckErrorState}
+                        placeholder="비밀번호 확인"/>
+                </div>
+            </div>
+                 
             <div className="flex w-[60%] gap-[5%]">
                 <Link href={'/'} 
                     className="
                         w-[60%]
-                        text-xl text-red-500 text-center
-                        bg-[#FAFAFA]
-                        rounded-4xl
-                        p-3 my-3
-                        cursor-pointer
-                ">취소</Link>
+                        text-xl text-black text-center
+                        bg-[#FAFAFA] rounded-4xl
+                        p-3 my-3 cursor-pointer
+                        hover:shadow-sm hover:shadow-red-200
+                        hover:text-red-500">
+                    취소
+                </Link>
                 <Button content="확인" />
             </div>
         </form>
