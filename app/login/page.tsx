@@ -51,8 +51,11 @@ export default function Login () {
                     w-full
                     flex flex-col items-center
                     mt-2">
-                <Input type="id" value={id} onChange={setId} placeholder="아이디"/>
-                <Input type="password" value={password} onChange={setPassword} placeholder="비밀번호"/>
+                <div className="w-[60%]">
+                    <Input type="id" value={id} onChange={setId} placeholder="아이디"/>
+                    <Input type="password" value={password} onChange={setPassword} placeholder="비밀번호"/>
+                </div>
+                
                 <p className={`${errorState ? "block" : "hidden"} text-red-600`}>{errorMessage}</p>
                 <div className="m-3">
                     <Link href={"signUp"} className="text-black hover:text-sky-500">회원가입</Link>

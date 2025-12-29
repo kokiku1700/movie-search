@@ -22,10 +22,15 @@ export default function SignUp () {
     });
 
     // 각 input별 에러 상태
-    const [nicknameErrorState, setNickNameErrorState] = useState("");
-    const [idErrorState, setIdErrorState] = useState("");
-    const [passwordErrorState, setPasswordErrorState] = useState("");
-    const [passwordCheckErrorState, setPasswordCheckErrorState] = useState("");
+    const [nicknameErrorState, setNickNameErrorState] = useState<boolean | null>(null);
+    const [idErrorState, setIdErrorState] = useState<boolean | null>(null);
+    const [passwordErrorState, setPasswordErrorState] = useState<boolean | null>(null);
+    const [passwordCheckErrorState, setPasswordCheckErrorState] = useState<boolean | null>(null);
+    
+    const [nicknameErrorMessage, setNickNameErrorMessage] = useState("");
+    const [idErrorMessage, setIdErrorMessage] = useState("");
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+    const [passwordCheckErrorMessage, setPasswordCheckErrorMessage] = useState("");
 
     const router = useRouter();
 
@@ -67,11 +72,24 @@ export default function SignUp () {
                     <Input 
                         type="name" value={nickname} kind="signup"
                         onChange={setNickname} 
-                        validate={v => validation.nickname.regex.test(v)} 
+                        validate={v => validation.name.regex.test(v)} 
                         onValidate={isValid => setValids(prev => ({...prev, nickname: isValid}))}
                         setErrorState={setNickNameErrorState}
+                        setErrorMessage={setNickNameErrorMessage}
                         placeholder="닉네임"/>
-                    <p className="text-black mx-5"><span className="mr-2">※</span>{validation.nickname.guide}</p>
+                    <p className={`${nicknameErrorState === null ?
+                                    'text-black' : 
+                                    nicknameErrorState ? 
+                                    "text-sky-500" : 
+                                    "text-red-500"} mx-5`}>
+                        <span className="mr-2">※</span>
+                        {nicknameErrorState === null ? 
+                            validation.name.guide : 
+                            nicknameErrorState ? 
+                            "사용가능합니다." :
+                            nicknameErrorMessage
+                        }
+                    </p>
                 </div>
                 <div className="w-[60%] flex flex-col">
                     <Input type="id" value={id} kind="signup" 
@@ -79,8 +97,21 @@ export default function SignUp () {
                         validate={v => validation.id.regex.test(v)} 
                         onValidate={isValid => setValids(prev => ({...prev, id: isValid}))}
                         setErrorState={setIdErrorState}
+                        setErrorMessage={setIdErrorMessage}
                         placeholder="아이디"/>
-                    <p className="text-black mx-5"><span className="mr-2">※</span>{validation.id.guide}</p>
+                    <p className={`${idErrorState === null ?
+                                    'text-black' : 
+                                    idErrorState ? 
+                                    "text-sky-500" : 
+                                    "text-red-500"} mx-5`}>
+                        <span className="mr-2">※</span>
+                        {idErrorState === null ? 
+                            validation.id.guide : 
+                            idErrorState ? 
+                            "사용가능합니다." :
+                            idErrorMessage
+                        }
+                    </p>
                 </div>
                 <div className="w-[60%] flex flex-col">
                     <Input type="password" value={password} kind="signup" 
@@ -88,17 +119,37 @@ export default function SignUp () {
                         validate={v => validation.password.regex.test(v)} 
                         onValidate={isValid => setValids(prev => ({...prev, password: isValid}))}
                         setErrorState={setPasswordErrorState}
+                        setErrorMessage={setPasswordErrorMessage}
                         placeholder="비밀번호"/>
-                    <p className="text-black mx-5"><span className="mr-2">※</span>{validation.password.guide}</p>
+                    <p className={`${passwordErrorState === null ?
+                                    'text-black' : 
+                                    passwordErrorState ? 
+                                    "text-sky-500" : 
+                                    "text-red-500"} mx-5`}>
+                        <span className="mr-2">※</span>
+                        {passwordErrorState === null ? 
+                            validation.password.guide : 
+                            passwordErrorState ? 
+                            "사용가능합니다." :
+                            passwordErrorMessage
+                        }
+                    </p>
                 </div>
                 <div className="w-[60%] flex flex-col">
                     <Input type="password" value={passwordCheck} kind="signup" 
                         onChange={setPasswordCheck} 
                         pwValue={{password}} 
                         onValidate={isValid => setValids(prev => ({...prev, passwordCheck: isValid}))}
-                        validate={(v, vc) => v === vc?.password} 
+                        validate={(v, vc) => v === vc?.password && vc.password !== ""} 
                         setErrorState={setPasswordCheckErrorState}
+                        setErrorMessage={setPasswordCheckErrorMessage}
                         placeholder="비밀번호 확인"/>
+                        <p className={`mx-5 
+                                    ${passwordCheckErrorState === null ? "hidden" : "block"}
+                                    ${passwordCheckErrorState ? "text-sky-500" : "text-red-500"}`}>
+                            <span className="mr-2">※</span>
+                            {passwordCheckErrorState ? "사용가능합니다." : passwordCheckErrorMessage}
+                        </p>
                 </div>
             </div>
                  

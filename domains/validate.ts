@@ -1,5 +1,5 @@
 
-type InputField = "nickname" | "id" | "password";
+export type InputField = "name" | "id" | "password";
 
 export const validation: Record<
     InputField, 
@@ -9,7 +9,7 @@ export const validation: Record<
         error: string;
     }
 > = {
-    nickname: {
+    name: {
         regex: /^[가-힣]{2,12}$/,
         guide: "2~12자 한글",
         error: "2~12자의 한글만 가능합니다."
