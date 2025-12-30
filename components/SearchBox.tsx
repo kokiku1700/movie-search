@@ -12,8 +12,8 @@ export default function SearchBox () {
 
     const handlerSearch = () => {
         if ( search !== "" ) {
-            if ( pathname === "/list") router.replace(`/list?q=${search}`, undefined, {shallow: true});
-            else router.push(`/list?q=${search}`);
+            if ( pathname === "/list") router.replace(`/list?q=${search}&page=1`, undefined, {shallow: true});
+            else router.push(`/list?q=${search}&page=1`);
         };
     };
     return (

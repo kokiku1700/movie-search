@@ -6,7 +6,7 @@ export default function Header () {
 
     return (
         <div className="
-            sticky w-full top-0 z-50 shadow-md
+            sticky w-full top-0 z-9999 shadow-md
             flex justify-center align-center
             bg-my-gray
         ">
