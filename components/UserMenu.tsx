@@ -25,15 +25,66 @@ export default function UserMenu () {
     return (
         <>
             {userNickname ? 
-                <div className="w-full flex justify-center gap-4">
-                    <Link href={"/likes"} className="hover:text-sky-500">좋아요</Link>
-                    <Link href={'/myInformation'} className="hover:text-sky-500">{userNickname} 님</Link>
-                    <span onClick={handleLogout} className="cursor-pointer hover:text-sky-500">로그아웃</span>
+                <div 
+                    className="
+                        z-99
+                        absolute top-full right-0
+                        flex flex-col items-center justify-center gap-2
+                        p-2
+                        rounded-xl
+                        whitespace-nowrap
+                        bg-black"
+                >
+                    <Link 
+                        href={"/likes"} 
+                        className="
+                            px-7 sm:px-10 py-3 sm:py-5
+                            whitespace-nowrap 
+                            hover:text-sky-500">
+                        좋아요
+                    </Link>
+                    <Link 
+                        href={'/myInformation'} 
+                        className="
+                            px-7 sm:px-10 py-3 sm:py-5
+                            whitespace-nowrap 
+                            hover:text-sky-500">
+                        {userNickname} 님
+                    </Link>
+                    <span 
+                        onClick={handleLogout} 
+                        className="
+                            px-7 sm:px-10 py-3 sm:py-5
+                            whitespace-nowrap 
+                            cursor-pointer 
+                            hover:text-sky-500">
+                        로그아웃
+                    </span>
                 </div>
                 :
-                <div className="w-full flex justify-center">
-                    <Link href={"/login"} className="mx-2 px-2 whitespace-nowrap hover:text-sky-500">로그인</Link>
-                    <Link href={"/signUp"} className="mx-2 px-2 whitespace-nowrap hover:text-sky-500">회원가입</Link>
+                <div 
+                    className="
+                        z-99
+                        absolute top-full right-0
+                        flex flex-col items-center justify-center gap-2
+                        p-2
+                        rounded-xl
+                        whitespace-nowrap
+                        bg-black">
+                    <Link href={"/login"} 
+                        className="
+                            px-7 sm:px-10 py-3 sm:py-5
+                            whitespace-nowrap 
+                            hover:text-sky-500">
+                        로그인
+                    </Link>
+                    <Link href={"/signUp"} 
+                        className="
+                            px-7 sm:px-10 py-3 sm:py-5
+                            whitespace-nowrap 
+                            hover:text-sky-500">
+                        회원가입
+                    </Link>
                 </div>
             }
         </> 

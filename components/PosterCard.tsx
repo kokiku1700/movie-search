@@ -16,7 +16,14 @@ export default function PosterCard ({id, titleAndName, mediaType, posterPath, id
 
     return (
         <div className="relative overflow-hidden">
-            <h2 className="my-1 overflow-hidden truncate whitespace-nowrap text-center text-xl">{titleAndName}</h2>
+            <h2 className="
+                my-1 
+                overflow-hidden truncate whitespace-nowrap 
+                text-center text-base
+                lg:text-xl
+                ">
+                {titleAndName}
+            </h2>
             <div className="relative group">
                 <span className="
                     absolute inset-0 flex items-center justify-center

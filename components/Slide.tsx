@@ -66,7 +66,11 @@ export default function MovieSlide ({ url, subject, mediaType }: Props) {
     return (
         <div className="w-[90%] mx-auto pb-4 relative">
             <h1 className="text-4xl my-3">{subject}</h1>
-            <button ref={prevRef} className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-20 cursor-pointer">
+            <button ref={prevRef} 
+                className="
+                    z-20
+                    absolute left-[-3%] top-1/2 -translate-y-1/2  
+                    cursor-pointer ">
                 <Image src={prev} alt="prev" width={50} height={50}/>
             </button>
             <Swiper 
@@ -86,13 +90,16 @@ export default function MovieSlide ({ url, subject, mediaType }: Props) {
                     });
                 }}>
                 {movies.map((movie, i) => (
-                    <SwiperSlide key={movie.id} style={{ width: '200px' }}>
-                        <PosterCard 
-                            id={movie.id} 
-                            titleAndName={movie.title || movie.name} 
-                            mediaType={movie.media_type || "movie"} 
-                            posterPath={movie.poster_path} 
-                            idx={i} />
+                    <SwiperSlide key={movie.id} className="!w-auto">
+                        <div className="w-[150px] lg:w-[200px]">
+                            <PosterCard 
+                                id={movie.id} 
+                                titleAndName={movie.title || movie.name} 
+                                mediaType={movie.media_type || "movie"} 
+                                posterPath={movie.poster_path} 
+                                idx={i} />
+                        </div>
+
                     </SwiperSlide>
                 ))}
             </Swiper>

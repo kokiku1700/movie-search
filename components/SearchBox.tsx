@@ -12,12 +12,19 @@ export default function SearchBox () {
 
     const handlerSearch = () => {
         if ( search !== "" ) {
+            // 기존 코드에서는 &page=1은 없었지만
+            // 페이지네이션을 적용하면서 추가했다.
+            // 새로 검색하면 첫 페이지를 렌더링해준다.
             if ( pathname === "/list") router.replace(`/list?q=${search}&page=1`, undefined, {shallow: true});
             else router.push(`/list?q=${search}&page=1`);
         };
     };
     return (
-        <div className="flex justify-center items-center w-[60%]">
+        <div className="
+            relative 
+            flex justify-center items-center 
+            w-[100%] 
+            sm:w-[80%] xl:w-[60%]">
             <SearchBar search={search} setSearch={setSearch} onEnter={handlerSearch} />
             <SearchButton onClick={handlerSearch} />
         </div>

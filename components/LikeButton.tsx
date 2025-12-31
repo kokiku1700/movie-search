@@ -32,15 +32,18 @@ export default function LikeButton ( { movieId, mediaType, detail }: Props ) {
     }, []);
 
     return (
-        <div>
-            <Image 
-                src={isLiked ? heart : emptyHeart} 
-                alt={isLiked ? "heart" : "emptyHeart"}
-                onClick={() => toggleLike(movieId)}
-                className={detail ? "cursor-pointer z-100" : "absolute bottom-[1%] right-[1%] cursor-pointer z-100"} 
-            /> 
-        </div>
-
+        <Image 
+            src={isLiked ? heart : emptyHeart} 
+            alt={isLiked ? "heart" : "emptyHeart"}
+            onClick={() => toggleLike(movieId)}
+            className={
+                detail ? 
+                "cursor-pointer z-100" : 
+                `w-10 h-10 
+                absolute bottom-[3%] right-[3%] 
+                cursor-pointer z-100
+                lg:w-13 lg:h-13`} 
+        /> 
     )
     
 }

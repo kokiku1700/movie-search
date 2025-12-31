@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 import Footer from "@/components/Footer";
@@ -6,6 +6,13 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "D.MS",
   description: "다양한 영화, tv 등 여러 작품을 검색해보세요.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

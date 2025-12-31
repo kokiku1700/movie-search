@@ -26,15 +26,15 @@ export default function SearchBar ({search, setSearch, onEnter}: Props) {
             onKeyDown={onKeyDown}
             placeholder="제목을 입력해주세요."
             className="
-                w-2/3 rounded-4xl 
-                text-2xl text-black
+                w-5/6 rounded-4xl 
+                text-xl text-black
                 leading-6
                 font-normal
-                p-3 pl-10 pr-17 m-5
+                p-2 pl-7 pr-12
                 bg-gray-200
-                focus:outline-none
-                focus:ring-3
+                focus:outline-none focus:ring-3
                 focus:ring-sky-500
+                xl:p-3 xl:pl-10 xl:text-2xl
             "
         />
     )
