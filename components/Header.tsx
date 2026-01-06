@@ -24,14 +24,16 @@ export default function Header () {
                 grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto]
                 items-center gap-y-2
                 p-1
-                lg:grid-rows-1">
-                <div className="row-start-1 col-start-1">
+                lg:grid-cols-none lg:grid-rows-none
+                lg:flex lg:justify-between">
+                <div className="row-start-1 col-start-1 lg:pl-40">
                     <Logo />
                 </div>
                 <div className="
                     row-start-2 col-span-3 
                     flex justify-center
-                    lg:row-start-1 lg:col-start-2 lg:col-span-1">
+                    lg:flex-1
+                    ">
                     <SearchBox />
                 </div>
                 <div 
@@ -40,9 +42,13 @@ export default function Header () {
                         relative 
                         row-start-1 col-start-3  
                         w-10 sm:w-13 h-10 sm:h-12
-                        px-5">
+                        px-5
+                        lg:hidden">
                     <Image src={menu} alt="menu" fill />
                     {menuState && <UserMenu />}
+                </div>
+                <div className="hidden lg:flex">
+                    <UserMenu />
                 </div>
             </div>
         </header>

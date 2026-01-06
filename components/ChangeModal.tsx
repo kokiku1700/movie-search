@@ -26,8 +26,8 @@ export default function ChangeModal ({ modalType, id, nickname, onClick, onSave 
         editCheck: "",
     });
     // 닉네임 중복확인을 위한 변수
-    // 
     const [duplication, setDuplication] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
     // props로 전달받은 값이 제대로 적용이 안돼서 만든 코드.
     // 즉 렌더링 과정에서 순서 차이때문에 값이 적용이 안됨.
@@ -64,7 +64,7 @@ export default function ChangeModal ({ modalType, id, nickname, onClick, onSave 
     const onClickEdit = async() => {
         if ( modalType === "nickname" ) {
             if ( duplication ) {
-                await fetch(`api/edit`, {
+                await fetch(`/api/edit`, {
                     method: "PATCH",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
@@ -78,10 +78,10 @@ export default function ChangeModal ({ modalType, id, nickname, onClick, onSave 
                 onClick();
                 setDuplication(false);
             } else {
-                console.log("중복된 닉네임입니다.");
+                setErrorMessage("중복된 닉네임입니다.");
             };
         } else {
-            const res = await fetch('api/check_pw', {
+            const res = await fetch('/api/check_pw', {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({ id }),
@@ -89,17 +89,17 @@ export default function ChangeModal ({ modalType, id, nickname, onClick, onSave 
             const data = await res.json();
             
             if ( data.user_password !== password.now ) {
-                console.log("현재 비밀번호가 다릅니다.")
+                setErrorMessage("현재 비밀번호가 다릅니다.")
             } else if ( password.edit === "" ) {
-                console.log("비밀번호를 입력해주세요");
+                setErrorMessage("비밀번호를 입력해주세요");
             } else if ( password.editCheck === "" ) {
-                console.log("비밀번호 확인을 입력해주세요");
+                setErrorMessage("비밀번호 확인을 입력해주세요");
             } else if ( password.edit !== password.editCheck ) {
-                console.log("입력한 비밀번호를 확인해주세요");
+                setErrorMessage("입력한 비밀번호를 확인해주세요");
             } else {
-                await fetch('api/edit', {
+                await fetch('/api/edit', {
                     method: "PATCH",
-                    headers: {"Content-Type": "applicaation/json"},
+                    headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                         id,
                         password: password.editCheck,
@@ -120,11 +120,14 @@ export default function ChangeModal ({ modalType, id, nickname, onClick, onSave 
     };
 
     return (
-        <div className="fixed inset-0 w-full">
+        <div className="fixed inset-0 w-full bg-black/50">
             <div className="
-                absolute top-[50%] left-[50%] w-[30%] 
+                absolute top-[50%] left-[50%] w-[95%] 
                 transform translate-x-[-50%] translate-y-[-50%]
-                p-5 text-black bg-white rounded-lg">
+                p-2 text-white rounded-lg 
+                bg-gradient-to-br from-gray-500 to-gray-600
+                lg:w-[50%] lg:p-5
+                xl:w-[30%]">
                 {modalType === "nickname" ? 
                     <div>
                         <h1 className="m-2">닉네임 :</h1>
@@ -150,7 +153,7 @@ export default function ChangeModal ({ modalType, id, nickname, onClick, onSave 
                         </div>
                     </div>
                 }
-
+                <p>{errorMessage}</p>
                 <div className="flex justify-end">
                     <ModalButton content="취소" onClick={onClickCancle} color="red" />
                     <ModalButton content="변경" onClick={onClickEdit} color="green" />

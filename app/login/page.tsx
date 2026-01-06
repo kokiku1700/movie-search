@@ -39,30 +39,34 @@ export default function Login () {
 
     return (
         <div className="
-                w-[40%] bg-[#DCDCDC] 
-                mx-auto pt-10 pb-20 mt-50 rounded-lg    
+                w-[95%] bg-[#DCDCDC] 
+                mx-auto px-5 pt-10 pb-20 mt-15 rounded-lg    
                 flex flex-col items-center
-                bg-gradient-to-br from-neutral-200 to-neutral-400">
+                bg-gradient-to-br from-neutral-200 to-neutral-400
+                lg:w-[40%] lg:mt-50">
             <Logo loc="login" />
-            <p className="my-2 text-neutral-700">당신의 취향을 기록하는 영화 관리 서비스</p>
+            <p className="
+                my-2 
+                text-sm text-neutral-700
+                lg:text-base">
+                당신의 취향을 기록하는 영화 관리 서비스
+            </p>
             <form 
                 onSubmit={onSubmit}
                 className="
                     w-full
                     flex flex-col items-center
                     mt-2">
-                <div className="w-[60%]">
+                <div className="w-[80%] lg:w-[60%]">
                     <Input type="id" value={id} onChange={setId} placeholder="아이디"/>
                     <Input type="password" value={password} onChange={setPassword} placeholder="비밀번호"/>
                 </div>
                 
-                <p className={`${errorState ? "block" : "hidden"} text-red-600`}>{errorMessage}</p>
+                <p className={`${errorState ? "block" : "hidden"} text-red-600 mt-3`}>{errorMessage}</p>
                 <div className="m-3">
                     <Link href={"signUp"} className="text-black hover:text-sky-500">회원가입</Link>
                     <span className="mx-2 cursor-default text-black">|</span>
-                    <Link href={"id_pw_Find"} className="text-black hover:text-sky-500">아이디 찾기</Link>
-                    <span className="mx-2 cursor-default text-black">|</span>
-                    <Link href={"id_pw_Find"} className="text-black hover:text-sky-500">비밀번호 찾기</Link>
+                    <Link href={"pw_Find"} className="text-black hover:text-sky-500">비밀번호 찾기</Link>
                 </div>
                 <Button content="로그인" />
             </form>

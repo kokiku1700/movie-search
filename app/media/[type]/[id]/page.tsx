@@ -34,34 +34,56 @@ export default async function MediaDetail ({
         <div className="w-[95%] mx-auto">
             <div 
                 className="
-                    relative flex bg-cover p-20 overflow-hidden rounded-xl
+                    relative 
+                    flex flex-col 
+                    bg-cover p-1 overflow-hidden rounded-xl
                     after:content-[''] after:absolute after:inset-0
-                    after:bg-black after:opacity-70"
+                    after:bg-black after:opacity-70
+                    lg:p-10
+                    xl:flex-row xl:p-20"
                 style={{backgroundImage: `url("https://image.tmdb.org/t/p/original${media.backdrop_path}")`}}>
-                <div className="relative m-5 z-10 w-[300px] aspect-[2/3] overflow-hidden block shrink-0">
+                <div className="
+                    z-10 relative 
+                    w-[200px] aspect-[2/3]
+                    mx-auto  
+                    overflow-hidden 
+                    block shrink-0
+                    xl:w-[300px]">
                     <Image 
                         src={`https://image.tmdb.org/t/p/original${media.poster_path}`}
                         alt={media.title || media.name}
                         fill
                         sizes="600px"
-                        className="object-cover"
+                        className="object-cover mt-5 xl:mt-0"
                     />
                 </div>
 
                 <div className="m-5 z-10">
-                    <div className="flex">
+                    <div className="
+                        flex flex-col text-center
+                        xl:flex-row">
                         <h1 className="text-4xl font-bold">{type === "movie" ? media.title : media.name}</h1>
                         <span className="text-3xl ml-5 font-semibold">({type === "movie" ? media.release_date : media.first_air_date})</span>
                     </div>
 
-                    <div className="flex items-center gap-4 font-semibold mt-5">
+                    <div className="
+                        flex flex-col justify-center items-center gap-4 
+                        font-semibold my-5
+                        xl:flex-row xl:justify-start xl:mb-0">
                         <span className="rounded-sm border-2 py-1 px-2">{contentRating}</span>
-                        {media.genres.map(({id, name}: { id: number, name: string }) => (
-                            <span key={id}>{name}</span>
-                        ))}
+                        <div className="flex flex-wrap gap-4 justify-center whitespace-nowrap">
+                            {media.genres.map(({id, name}: { id: number, name: string }) => (
+                                <span key={id}>{name}</span>
+                            ))}
+                        </div>
+
                     </div>
 
-                    <div className="flex items-center gap-5 text-xl relative">
+                    <div className="
+                        relative
+                        flex flex-col items-center gap-1
+                        text-xl 
+                        xl:flex-row xl:gap-5">
                         {type === "movie" 
                             ?
                             <span className="font-semibold">상영 시간 : {media.runtime}분 {media.episode_run_time}</span>

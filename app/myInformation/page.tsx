@@ -28,6 +28,15 @@ export default function MyInformation () {
         setInformation({id, nickname});
     }, []);
 
+    // 모달이 켜지면 뒤에 스크롤 막음.
+    useEffect(() => {
+        if ( modalState ) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+    }, [modalState]);
+
     const onSaveInfo = (e: Information) => {
         setInformation(e);
     };
@@ -59,25 +68,36 @@ export default function MyInformation () {
     return (
         <div className="w-full">
             <section className="
-                w-[40%] mx-auto mt-20 p-10
-                rounded-lg bg-gray-500">
+                w-[90%] mx-auto mt-10 p-5
+                rounded-lg
+                bg-gradient-to-br from-gray-500 to-gray-400
+                lg:w-[60%]
+                xl:w-[40%] xl:mt-20 xl:p-10">
                 <div className="text-center mt-5 mb-5 pb-5 border-b">
                     <Logo />
                 </div>
                 <div className="flex items-center">
-                    <h3 className="text-2xl m-5">아이디 :</h3>
-                    <span className="text-xl">{information.id}</span>
+                    <h3 className="text-xl m-5 xl:text-3xl">아이디 :</h3>
+                    <span className="text-lg">{information.id}</span>
                 </div>
                 <div className="flex items-center">
-                    <h3 className="text-2xl m-5">닉네임 :</h3>
-                    <span className="text-xl">{information.nickname}</span>
+                    <h3 className="text-xl m-5 xl:text-3xl">닉네임 :</h3>
+                    <span className="text-lg">{information.nickname}</span>
                     <ModalButton content="변경" name="nickcname" onClick={() => modalToggle("nickname")} color="black" />
                 </div>
                 <div className="flex w-full items-center">
-                    <h3 className="text-2xl ml-5 my-5">비밀번호 :</h3>
+                    <h3 className="text-xl ml-5 my-5 xl:text-3xl">비밀번호 :</h3>
                     <ModalButton content="변경" name="password" onClick={() => modalToggle("password")} color="black" />
                 </div>
-                <ModalButton content="회원탈퇴" onClick={onUnregister} color="black" />
+                <button 
+                    onClick={onUnregister}
+                    className="
+                    m-2 p-3
+                    text-red-400
+                    cursor-pointer
+                    ">
+                    회원탈퇴
+                </button>
             </section>
             {modalState && <ChangeModal modalType={modalType} id={information.id} nickname={information.nickname} onSave={onSaveInfo} onClick={modalToggle} />}
         </div>

@@ -5,8 +5,11 @@ export default function Footer () {
 
     return (
         <div className="
-            w-full py-20 mt-10 bg-black
-            flex flex-col justify-center items-center">
+            w-full 
+            flex flex-col justify-center items-center
+            py-20 mt-10 px-10 
+            text-center
+            bg-black">
             <Image 
                 src={tmdb_logo}
                 alt="tmdb logo"

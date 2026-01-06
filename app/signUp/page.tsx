@@ -61,14 +61,15 @@ export default function SignUp () {
         <form 
             onSubmit={onSubmit}
             className="
-                w-[40%] bg-[#DCDCDC] 
-                mx-auto pt-10 pb-20 mt-30 rounded-lg 
+                w-[95%] bg-[#DCDCDC] 
+                mx-auto pt-10 pb-20 mt-15 rounded-lg 
                 flex flex-col items-center
                 bg-gradient-to-br from-neutral-200 to-neutral-400
+                lg:w-[40%] lg:mt-30
         ">
             <h1 className="text-2xl text-black m-5">회원가입</h1>
             <div className="w-full flex flex-col items-center ">
-                <div className="w-[60%] flex flex-col">
+                <div className="w-[80%] flex flex-col lg:w-[60%]">
                     <Input 
                         type="name" value={nickname} kind="signup"
                         onChange={setNickname} 
@@ -91,7 +92,7 @@ export default function SignUp () {
                         }
                     </p>
                 </div>
-                <div className="w-[60%] flex flex-col">
+                <div className="w-[80%] flex flex-col lg:w-[60%]">
                     <Input type="id" value={id} kind="signup" 
                         onChange={setId} 
                         validate={v => validation.id.regex.test(v)} 
@@ -113,7 +114,7 @@ export default function SignUp () {
                         }
                     </p>
                 </div>
-                <div className="w-[60%] flex flex-col">
+                <div className="w-[80%] flex flex-col lg:w-[60%]">
                     <Input type="password" value={password} kind="signup" 
                         onChange={setPassword} 
                         validate={v => validation.password.regex.test(v)} 
@@ -135,7 +136,7 @@ export default function SignUp () {
                         }
                     </p>
                 </div>
-                <div className="w-[60%] flex flex-col">
+                <div className="w-[80%] flex flex-col lg:w-[60%]">
                     <Input type="password" value={passwordCheck} kind="signup" 
                         onChange={setPasswordCheck} 
                         pwValue={{password}} 

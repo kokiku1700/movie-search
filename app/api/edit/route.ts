@@ -3,7 +3,7 @@ import sql from "@/lib/sql";
 export async function PATCH (req: Request) {
     const { id, nickname, password } = await req.json();
     
-    if ( nickname ) {
+    if ( nickname !== undefined ) {
         const result = await sql`
             update users
             set user_nickname=${nickname}
@@ -13,7 +13,7 @@ export async function PATCH (req: Request) {
 
         return Response.json(result[0]);
     }
-    if ( password ) {
+    if ( password !== undefined ) {
         const result = await sql`
             update users
             set user_password=${password}

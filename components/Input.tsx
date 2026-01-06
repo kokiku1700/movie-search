@@ -90,12 +90,13 @@ export default function Input ({type, value, kind, onChange, setErrorMessage, se
                 w-[100%]
                 text-xl text-black
                 bg-white rounded-2xl 
-                px-4 p-3 mt-3 mb-1
+                px-2 p-1 mt-3 mb-1
                 border-2
                 ${valid === null ? "border-gray-200" : valid ? "border-sky-500" : "border-red-500"}
                 focus:outline-none
                 focus:shadow-md
                 focus:shadow-white
+                lg:px-4 lg:p-3
             `}
             type={type}
             value={value}

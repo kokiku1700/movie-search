@@ -10,11 +10,13 @@ export default function Logo ({ loc }: Props) {
         <Link 
             href={"/"}
             className={`
-                text-3xl sm:text-4xl
+                text-3xl 
                 cursor-pointer
                 ${loc && "text-black"} 
                 hover:text-shadow-lg
-                hover:text-shadow-sky-500   
+                hover:${loc ? "text-shadow-white" : "text-shadow-black"}  
+                sm:text-4xl 
+                xl:text-5xl
             `}
         >
             D.MS
