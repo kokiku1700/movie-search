@@ -6,9 +6,11 @@ import { FormEvent, useState } from "react";
 type Props = {
     setStep: React.Dispatch<React.SetStateAction<"identify" | "results">>;
     setFindState: React.Dispatch<React.SetStateAction<boolean | null>>;
+    setSearchResult: React.Dispatch<React.SetStateAction<string | null>>;
+    setSearchKind: React.Dispatch<React.SetStateAction<"id" | "nickname" | null>>;
 };
 
-export default function PwFindForm ({ setStep, setFindState }: Props) {
+export default function PwFindForm ({ setStep, setFindState, setSearchResult, setSearchKind }: Props) {
     const [inputValue, setInputValue] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -27,9 +29,13 @@ export default function PwFindForm ({ setStep, setFindState }: Props) {
 
             setStep("results");
 
-            if ( idData.success || nicknameData.success ) {
-                console.log(idData.success)
-                console.log(nicknameData.success)
+            if ( idData.success ) {
+                setSearchKind("id");
+                setSearchResult(inputValue);
+                setFindState(true);
+            } else if ( nicknameData.success ) {
+                setSearchKind("nickname");
+                setSearchResult(inputValue);
                 setFindState(true);
             } else {
                 setFindState(false);

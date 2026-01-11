@@ -4,17 +4,18 @@ import Link from "next/link";
 import Button from "./Button";
 import Logo from "./Logo";
 import Input from "./Input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { validation } from "@/domains/validate";
 import { useRouter } from "next/navigation";
 
 type Props = {
     setStep: React.Dispatch<React.SetStateAction<"identify" | "results">>;
     findState: boolean | null;
+    searchResult: string | null;
+    searchKind: string | null;
 };
 
-export default function PwFindResult ( { setStep, findState }: Props) {
-    const [id, setId] = useState("");
+export default function PwFindResult ( { setStep, findState, searchResult, searchKind }: Props) {
     const [password, setPassword] = useState("");
     const [passwordCheck, setPasswordCheck] = useState("");
 
@@ -31,13 +32,30 @@ export default function PwFindResult ( { setStep, findState }: Props) {
 
     const onSubmit = async( e: React.FormEvent ) => {
         e.preventDefault();
+        
+        let userId: string | null;
+
+        if ( searchKind === "nickname" ) {
+            const res = await fetch('/api/check_user', {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    value: searchResult
+                })
+            });
+            const value = await res.json();
+            
+            userId = value.id;
+        } else {
+            userId = searchResult;
+        }
 
         if ( Object.values(valids).every(v => v === true) ) {
             await fetch('/api/edit', {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    id,
+                    id: userId,
                     password: passwordCheck,
                 })
             });
