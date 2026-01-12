@@ -26,7 +26,7 @@ export default function Header () {
                 p-1
                 lg:grid-cols-none lg:grid-rows-none
                 lg:flex lg:justify-between">
-                <div className="row-start-1 col-start-1 lg:pl-40">
+                <div className="row-start-1 col-start-1 lg:pl-30">
                     <Logo />
                 </div>
                 <div className="

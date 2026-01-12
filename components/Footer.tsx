@@ -7,15 +7,16 @@ export default function Footer () {
         <div className="
             w-full 
             flex flex-col justify-center items-center
-            py-20 mt-10 px-10 
+            py-10 mt-10 px-10 
             text-center
-            bg-black">
+            bg-black
+            xl:py-20">
             <Image 
                 src={tmdb_logo}
                 alt="tmdb logo"
                 width={800} />
-            <p className="my-5">프로젝트에 사용된 영화 및 TV 시리즈 정보는 TMDB(The Movie Database)에서 제공한 API를 사용합니다.</p>
-            <p className="text-xl mt-">"This product uses the TMDB API but is not endorsed or certified by TMDB."</p>
+            <p className="my-5 text-sm lg:text-base">프로젝트에 사용된 영화 및 TV 시리즈 정보는 TMDB(The Movie Database)에서 제공한 API를 사용합니다.</p>
+            <p className="text-sm lg:text-base">"This product uses the TMDB API but is not endorsed or certified by TMDB."</p>
         </div>
     )
 };

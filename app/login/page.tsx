@@ -43,7 +43,8 @@ export default function Login () {
                 mx-auto px-5 pt-10 pb-20 mt-15 rounded-lg    
                 flex flex-col items-center
                 bg-gradient-to-br from-neutral-200 to-neutral-400
-                lg:w-[40%] lg:mt-50">
+                lg:w-[60%] 
+                xl:w-[40%]">
             <Logo loc="login" />
             <p className="
                 my-2 

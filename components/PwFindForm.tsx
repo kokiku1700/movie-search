@@ -49,14 +49,27 @@ export default function PwFindForm ({ setStep, setFindState, setSearchResult, se
         <div 
             onSubmit={onSubmit}
             className="
-                flex flex-col items-center
-                w-[95%] mx-auto mt-10 p-10
+                flex flex-col items-center 
+                w-[90%] mx-auto mt-10 p-10
                 rounded-xl
-                bg-gradient-to-br from-neutral-200 to-neutral-400">
+                bg-gradient-to-br from-neutral-200 to-neutral-400
+                lg:w-[60%]
+                xl:w-[40%] xl:mt-25 xl:p-20">
             <Logo loc="black" />
-            <p className="mt-10 text-black">아이디 혹은 닉네임을 입력해주세요</p>
-            <p className="mt-2 text-red-500">{errorMessage}</p>
-            <form className="flex mt-2">
+            <p className="
+                mt-5 text-black
+                xl:mt-10 xl:text-xl xl:mb-5">
+                아이디 혹은 닉네임을 입력해주세요
+            </p>
+            <p className="mt-2 text-red-500">
+                {errorMessage}
+            </p>
+            <form 
+                className="
+                    w-full
+                    flex 
+                    mt-2 mx-auto
+                    lg:w-[60%]">
                 <input 
                     type="text"
                     value={inputValue}
@@ -65,13 +78,16 @@ export default function PwFindForm ({ setStep, setFindState, setSearchResult, se
                         w-[80%] 
                         pl-3 py-1
                         text-black
-                        rounded-xl
-                        bg-gray-200"/>
+                        rounded-4xl
+                        bg-gray-200
+                        lg:pl-5 lg:py-3 lg:w-full"/>
                 <button className="
                     px-2
-                    rounded-xl
+                    rounded-4xl
                     text-black whitespace-nowrap
                     bg-gray-200
+                    cursor-pointer
+                    lg:px-4
                 ">
                     확인
                 </button>

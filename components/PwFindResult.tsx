@@ -69,8 +69,15 @@ export default function PwFindResult ( { setStep, findState, searchResult, searc
     };
 
     return (
-        <div className="w-[90%] mx-auto flex flex-col items-center">
-            <Logo />
+        <div className="
+            w-[90%] 
+            mx-auto mt-10 p-10
+            flex flex-col items-center
+            rounded-xl
+            bg-gradient-to-br from-neutral-200 to-neutral-400
+            lg:w-[60%]
+            xl:w-[40%] xl:mt-25 xl:p-20">
+            <Logo loc="black"/>
             {findState 
                 ?
                 <form onSubmit={onSubmit}>
@@ -87,25 +94,56 @@ export default function PwFindResult ( { setStep, findState, searchResult, searc
                         validate={(v, vc) => v === vc?.password && vc.password !== ""} 
                         onValidate={isValid => setValids(prev => ({...prev, passwordCheck: isValid}))}
                         placeholder="새 비밀번호 확인"/>
-                    <div className="flex">
+                    <div className="flex gap-2">
                         <Link 
                             href="/login"
                             className="
+                                w-[60%]
+                                p-3 my-3
                                 text-center text-red-500
                                 rounded-4xl
-                                bg-white">
+                                bg-white
+                                lg:text-xl">
                             취소
                         </Link>
                         <Button content="확인" />
                     </div>
                 </form>
                 :
-                <div>
-                    <p>
+                <div 
+                    className="
+                        w-full
+                        flex flex-col
+                        ">
+                    <p className="text-center text-black my-2">
                         존재하는 아이디 혹은 닉네임이 없습니다.
                     </p>
-                    <Link href="/">홈</Link>
-                    <Link href="pw_Find" onClick={onClickChange}>비밀번호 찾기</Link>
+                    <div 
+                        className="
+                            w-full
+                            flex gap-2
+                            mx-auto
+                            lg:w-[70%]">
+                        <Link 
+                            href="/"
+                            className="
+                                    w-[60%]
+                                    p-3 my-3
+                                    text-center text-black
+                                    rounded-4xl
+                                    bg-white
+                                    lg:text-xl">홈</Link>
+                        <Link 
+                            href="pw_Find" 
+                            onClick={onClickChange}
+                            className="
+                                    w-[60%]
+                                    p-3 my-3
+                                    text-center text-black whitespace-nowrap
+                                    rounded-4xl
+                                    bg-white
+                                    lg:text-xl">다시 찾기</Link>
+                    </div>  
                 </div>
             }
         </div>
