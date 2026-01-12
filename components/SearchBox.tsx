@@ -15,7 +15,7 @@ export default function SearchBox () {
             // 기존 코드에서는 &page=1은 없었지만
             // 페이지네이션을 적용하면서 추가했다.
             // 새로 검색하면 첫 페이지를 렌더링해준다.
-            if ( pathname === "/list") router.replace(`/list?q=${search}&page=1`, undefined, {shallow: true});
+            if ( pathname === "/list") router.replace(`/list?q=${search}&page=1`, undefined);
             else router.push(`/list?q=${search}&page=1`);
         };
     };
