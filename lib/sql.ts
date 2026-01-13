@@ -1,11 +1,14 @@
 import postgres, { Sql } from "postgres";
 
-const sql: Sql = postgres({
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    database: process.env.POSTGRES_DATABASE,
-    username: process.env.POSTGRES_USERNAME,
-    password: process.env.POSTGRES_PW,
+const connectionString = process.env.DATABASE_URL;
+
+if ( !connectionString ) {
+    throw new Error("DATABASE_URL is not set");
+};
+
+const sql: Sql = postgres(connectionString, {
+    ssl: "require",
+    prepare: false,    
 });
 
 export default sql;
