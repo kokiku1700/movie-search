@@ -3,11 +3,23 @@
 import PosterCard from "@/components/PosterCard";
 import { useLikeMoviesQuery } from "@/hooks/useLikeMoviesQuery";
 import { useLikeMoviesDetailQuery } from "@/hooks/useLikeMoviesDetailQuery";
+import { useEffect, useState } from "react";
 
 export default function Likes () {
-    const userId = typeof window !== "undefined" ? localStorage.getItem("id") : null;
+    const [userId, setUserId] = useState<string | null>(null);
+    const [mounted, setMounted] = useState(false);
+
     const { data: likeMovies = [], isLoading: isLikeLoading, } = useLikeMoviesQuery(userId, "all");
     const { data: movies = [], isLoading: isMoviesLoading } = useLikeMoviesDetailQuery(likeMovies, !!userId);
+
+    useEffect(() => {
+        setMounted(true);
+        setUserId(localStorage.getItem("id"));
+    }, []);
+
+    if ( !mounted ) {
+        return <p className="text-center my-20">로딩 중...</p>
+    }
 
     if ( isLikeLoading || isMoviesLoading ) {
         return <p className="text-center my-20">로딩 중...</p>

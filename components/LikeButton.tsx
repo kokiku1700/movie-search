@@ -21,7 +21,7 @@ export default function LikeButton ( { movieId, mediaType, detail }: Props ) {
     const [storageId, setStorageId] = useState<string | null>("");
 
     const { data: likeMovies } = useLikeMoviesQuery(storageId, mediaType);
-    const { mutate: toggleLike } = useToggleLikeMutation(storageId, mediaType);
+    const { mutate: toggleLike, isPending } = useToggleLikeMutation(storageId, mediaType);
 
     const isLiked = likeMovies?.some(([id, type]:[number, string]) => id === movieId && type === mediaType);
 
@@ -31,11 +31,16 @@ export default function LikeButton ( { movieId, mediaType, detail }: Props ) {
         setStorageId(id);
     }, []);
 
+    const onClick = () => {
+        if ( isPending ) return;
+        toggleLike({mediaId: movieId, isLikedBefore: !!isLiked});
+    };
+
     return (
         <Image 
             src={isLiked ? heart : emptyHeart} 
             alt={isLiked ? "heart" : "emptyHeart"}
-            onClick={() => toggleLike(movieId)}
+            onClick={onClick}
             className={
                 detail ? 
                 "cursor-pointer z-100" : 
