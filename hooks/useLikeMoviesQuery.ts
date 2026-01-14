@@ -17,6 +17,7 @@ export function useLikeMoviesQuery(userId: string | null, mediaType: string) {
             const data = await res.json();
 
             return data.likes ?? [];
-        }
+        },
+        enabled: !!userId
     });
 };

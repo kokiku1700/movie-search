@@ -5,33 +5,60 @@ type LikeMovie = [number, string];
 // 좋아요 토글 기능
 export function useToggleLikeMutation ( userId: string | null, mediaType: string) {
     const queryClient = useQueryClient();
-
+    const queryKey = ["likeMovies", userId, mediaType] as const;
+    
     return useMutation({
         mutationFn: async ( mediaId: number ) => {
-            // getQueryData는 캐싱된 값들을 해당 키를 가져온다.
-            const likeMovies = queryClient.getQueryData<LikeMovie[]>(["likeMovies", userId, mediaType]) || [];
-            const isLiked = likeMovies.some(([id, type]:[number, string]) => {
-                return id === mediaId && type === mediaType
-            });
+            if ( !userId ) throw new Error("LOGIN_REQUIRED");
             
-            if ( isLiked ) {
-                await fetch(`/api/likes?user_id=${userId}&movie_id=${mediaId}&media_type=${mediaType}`, {
-                    method: "DELETE",
-                });
-            } else {
-                if ( !userId ) return alert("로그인 후 이용할 수 있습니다.");
-                await fetch("/api/likes", {
-                    method: "POST",
-                    body: JSON.stringify({
+            const likeMovies = queryClient.getQueryData<LikeMovie[]>(queryKey) ?? [];
+            const isLiked = likeMovies.some(([id, type]) => id === mediaId && type === mediaType );
+            const url = `/api/likes?user_id=${userId}&movie_id=${mediaId}&media_type=${mediaType}`
+            
+            const res = await fetch(isLiked ? url : "/api/likes", {
+                method: isLiked ? "DELETE" : "POST",
+                headers: isLiked ? undefined : { "Content-Type": "application/json"},
+                body: isLiked 
+                    ? undefined
+                    : JSON.stringify({
                         action: "postLikeMovies",
                         user: { user_id: userId, movie_id: mediaId, media_type: mediaType},
                     }),
-                });
+            });
+
+            if ( !res.ok ) throw new Error("좋아요 요청 실패");
+            
+            return { mediaId, isLiked };  
+        },
+
+        onMutate: async (mediaId: number) => {
+            await queryClient.cancelQueries({ queryKey });
+
+            const prev = queryClient.getQueryData<LikeMovie[]>(queryKey) ?? [];
+            const isLiked = prev.some(([id, type]) => id === mediaId && type === mediaType)
+        
+            queryClient.setQueryData<LikeMovie[]>(queryKey, (old = []) => {
+                if ( isLiked ) {
+                    return old.filter(([id, type]) => !(id === mediaId && type === mediaType));
+                }
+                return [...old, [mediaId, mediaType]];
+            });
+
+            return { prev };
+        },
+
+        onError: (err, _mediaId, context) => {
+            if (( err as Error ).message === "LOGIN_REQUIRED") {
+                alert("로그인 후 이용할 수 있습니다.");
+                return;
+            };
+            if ( context?.prev ) {
+                queryClient.setQueryData(queryKey, context.prev);
             };
         },
-        // 성공 시 기존에 캐싱되어 있는 값은 무효화하고 새롭게 업데이트한다.
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["likeMovies", userId, mediaType] });
-        },
+        
+        // onSettled: () => {
+        //     queryClient.invalidateQueries({ queryKey });
+        // },
     });
 };

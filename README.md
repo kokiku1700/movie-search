@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 영화 및 TV시리즈 검색 서비스
 
-## Getting Started
+## 프로젝트 소개
+본 프로젝트는 TMDB api를 활용한 검색 서비스입니다. 
 
-First, run the development server:
+키워드 검색, 작품 상세 정보, 페이지네이션, 로그인 기반 좋아요 기능을 제공하고 있습니다. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Next.js**와 **Tailwind css**, **PostgreSQL**를 실제 서비스에 처음 적용해보는 프로젝트로 각 기술의 기본 개념과 숙달을 목표로 진행해 봤습니다. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+특히 next.js의 장점인 **SEO 노출 최적화**, **빠른 렌더링**, **백엔드 기능 지원**의 특성을 고려해 검색 중심 서비스에 적합한 구조를 설계하기 위해 해당 주제를 선택하게 됐습니다. 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 배포 링크
+<http://movie-search-delta-one.vercel.app>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+>TMDB api를 활용한 영화 및 TV시리즈 검색 서비스입니다.
 
-## Learn More
+>키워드 기반으로 검색을 제공하며, 로그인 시 좋아요 기능을 사용할 수 있습니다. 
+## 주요 기능
 
-To learn more about Next.js, take a look at the following resources:
+### 키워드 검색
+영화 및 TV시리즈를 키워드로 검색할 수 있습니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+TMDB api를 활용한 실시간 검색 결과를 제공합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+>검색어를 URL 쿼리 파라미터로 관리하여 새로고침이나 링크 공유에도 검색 결과가 유지되도록 만들었습니다. 
 
-## Deploy on Vercel
+![키워드 검색 결과 이미지("너의")](/public/readmeImg/keyword_search.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 페이지네이션
+많은 양의 검색 결과를 페이지 단위로 제공합니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+TMDB api에서 제공하는 페이지 번호를 활용해 페이지네이션의 번호를 구성했습니다.
+
+>페이지 변경 시 검색어와 변경된 페이지 번호를 URL 쿼리 파라미터로 전달해 페이지를 이동해도 검색 결과를 유지하게 구현했습니다.
+
+![페이지네이션 이미지](/public/readmeImg/Pagination.png)
+
+### 좋아요 
+토글 방식을 활용해 좋아요 / 취소가 가능합니다. 
+
+좋아요한 작품은 좋아요 페이지에서 한 눈에 확인이 가능합니다.
+
+좋아요 누른 작품은 메인 페이지 및 검색 목록 페이지, 상세 페이지에도 일관되게 표시됩니다.
+
+>좋아요 기능은 리액트 쿼리를 사용해 구현했습니다. 
+
+>여러 페이지 간 이동 시에도 좋아요 상태가 즉시 동기화되도록 구현했습니다.
+
+![좋아요](/public/readmeImg/like.png)
