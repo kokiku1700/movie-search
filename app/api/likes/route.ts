@@ -23,7 +23,7 @@ export async function POST ( req: Request ) {
             const likes = ((result as unknown) as LikeRow[]).map(e => [e.movie_id, e.media_type]);
             return new Response(JSON.stringify({ likes }));
         
-        // 좋아요를 누르면 데이터베이스로 아이디와 영화 아이디를 보낸다.
+        // 좋아요를 누르면 데이터베이스에 아이디와 작품 아이디, 작품 타입을 저장한다.
         case "postLikeMovies":
             // on confilict do nothing
             // 이미 데이터베이스에 값이 있다면 무시한다.
