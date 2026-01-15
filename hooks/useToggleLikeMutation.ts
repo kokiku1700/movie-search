@@ -48,6 +48,7 @@ export function useToggleLikeMutation ( userId: string | null, mediaType: string
         // 낙관적 업데이트.
         // mutationFn 실행 전 우선 실행된다. 
         onMutate: async ({mediaId}: ToggleVars) => {
+            if ( !userId ) throw new Error("LOGIN_REQUIRED");
             // refeth 중인 데이터 요청을 취소한다. 
             // 만일 likeMovies가 백그라운드에서 실행 중일 때 
             // 이 낙관적 업데이트와 충돌 가능성이 있기 때문이다. 
@@ -72,14 +73,16 @@ export function useToggleLikeMutation ( userId: string | null, mediaType: string
 
         // 두 번째 인자 _mediaId는 mutationFn에서 받은 매개변수 전체가 들어와 있다.
         onError: (err, _mediaId, context) => {
-            if (( err as Error ).message === "LOGIN_REQUIRED") {
-                alert("로그인 후 이용할 수 있습니다.");
-                return;
-            };
             // onMutate에서 실패를 대비해 반환했던 이전 개시값이 있을 경우 
             if ( context?.prev ) {
                 queryClient.setQueryData(queryKey, context.prev);
             };
+
+            if (( err as Error ).message === "LOGIN_REQUIRED") {
+                alert("로그인 후 이용할 수 있습니다.");
+                return;
+            };
+
         },
         
         // onSettled: () => {
