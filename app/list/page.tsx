@@ -1,4 +1,4 @@
-import { getMovies, Media } from "@/lib/searchGetMovie";
+import { getMovies } from "@/lib/searchGetMovie";
 import SearchList from "@/components/SearchList";
 import Pagination from "@/components/Pagination";
 
