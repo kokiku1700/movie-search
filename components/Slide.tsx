@@ -64,49 +64,133 @@ export default function MovieSlide ({ url, subject, mediaType }: Props) {
     }, []);
 
     return (
-        <div className="w-[90%] mx-auto pb-4 relative">
-            <h1 className="text-4xl my-3">{subject}</h1>
-            <button ref={prevRef} 
+        <div className="w-[92%] mx-auto py-8 relative">
+            {/* 제목 */}
+            <div className="mb-5 flex items-center gap-3">
+                <div className="w-1 h-8 rounded-full bg-sky-400" />
+
+                <h1 className="
+                    text-2xl md:text-3xl lg:text-4xl
+                    font-bold text-white">
+                    {subject}
+                </h1>
+            </div>
+            <div className="mt-3 h-px bg-gradient-to-r from-sky-400/50 via-white/10 to-transparent" />
+
+            {/* 이전 버튼 */}
+            <button
+                ref={prevRef}
+                aria-label="이전 슬라이드"
                 className="
+                    group
+                    absolute left-[-2%] top-[55%]
+                    -translate-y-1/2
                     z-20
-                    absolute left-[-3%] top-1/2 -translate-y-1/2  
-                    cursor-pointer ">
-                <Image src={prev} alt="prev" width={50} height={50}/>
+
+                    flex items-center justify-center
+                    size-11 lg:size-14
+
+                    rounded-full
+                    bg-black/40
+                    backdrop-blur-sm
+                    border border-white/10
+
+                    opacity-70
+                    transition-all duration-200
+
+                    hover:opacity-100
+                    hover:bg-sky-500/90
+                    hover:scale-105
+
+                    cursor-pointer">
+                <Image
+                    src={prev}
+                    alt=""
+                    width={36}
+                    height={36}
+                    className="
+                        transition-transform duration-200
+                        group-hover:-translate-x-0.5"/>
             </button>
-            <Swiper 
+
+            <Swiper
                 modules={[Navigation]}
                 spaceBetween={20}
                 slidesPerView="auto"
-                onSwiper={(swiper) => {   
+                onSwiper={(swiper) => {
                     setTimeout(() => {
                         if (!swiper.navigation) return;
 
                         // @ts-ignore
                         swiper.params.navigation.prevEl = prevRef.current;
+
                         // @ts-ignore
                         swiper.params.navigation.nextEl = nextRef.current;
+
                         swiper.navigation.init();
                         swiper.navigation.update();
                     });
-                }}>
+                }}
+                className="
+                    overflow-hidden
+                    py-2">
                 {movies.map((movie, i) => (
-                    <SwiperSlide key={movie.id} className="!w-auto">
-                        <div className="w-[150px] lg:w-[200px]">
-                            <PosterCard 
-                                id={movie.id} 
-                                titleAndName={movie.title || movie.name} 
-                                mediaType={movie.media_type || "movie"} 
-                                posterPath={movie.poster_path} 
-                                idx={i} />
+                    <SwiperSlide
+                        key={movie.id}
+                        className="!w-auto">
+                        <div
+                            className="
+                                w-[150px] lg:w-[200px]
+                                transition-transform
+                                duration-300
+                                hover:-translate-y-1">
+                            <PosterCard
+                                id={movie.id}
+                                titleAndName={movie.title || movie.name}
+                                mediaType={movie.media_type || "movie"}
+                                posterPath={movie.poster_path}
+                                idx={i}
+                            />
                         </div>
-
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <button ref={nextRef} 
-                className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-20 cursor-pointer">
-                <Image src={next} alt="prev" width={50} height={50}/>
+
+            {/* 다음 버튼 */}
+            <button
+                ref={nextRef}
+                aria-label="다음 슬라이드"
+                className="
+                    group
+                    absolute right-[-2%] top-[55%]
+                    -translate-y-1/2
+                    z-20
+
+                    flex items-center justify-center
+                    size-11 lg:size-14
+
+                    rounded-full
+                    bg-black/40
+                    backdrop-blur-sm
+                    border border-white/10
+
+                    opacity-70
+                    transition-all duration-200
+
+                    hover:opacity-100
+                    hover:bg-sky-500/90
+                    hover:scale-105
+
+                    cursor-pointer">
+                <Image
+                    src={next}
+                    alt=""
+                    width={36}
+                    height={36}
+                    className="
+                        transition-transform duration-200
+                        group-hover:translate-x-0.5"/>
             </button>
         </div>
-    )
-}
+    );
+};
