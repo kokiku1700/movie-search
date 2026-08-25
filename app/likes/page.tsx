@@ -11,27 +11,23 @@ export default function Likes () {
 
     const { data: likeMovies = [], isLoading: isLikeLoading, } = useLikeMoviesQuery(userId, "all");
     const { data: movies = [], isLoading: isMoviesLoading } = useLikeMoviesDetailQuery(likeMovies, !!userId);
-
+    
     useEffect(() => {
         setMounted(true);
         setUserId(localStorage.getItem("id"));
     }, []);
 
     if ( !mounted ) {
-        return <p className="text-center my-20">로딩 중...</p>
-    }
-
-    if ( isLikeLoading || isMoviesLoading ) {
-        return <p className="text-center my-20">로딩 중...</p>
+        return <p className="text-center my-50">로딩 중...</p>
     };
 
-    if ( movies.length === 0 ) {
-        return (
-            <p className="flex justify-center items-center my-50">
-                찜한 작품이 없습니다.
-            </p>
-        )
-    }
+    if (!userId) {
+        return <p className="text-center my-50">로그인이 필요합니다.</p>;
+    };
+
+    if ( isLikeLoading || isMoviesLoading ) {
+        return <p className="text-center my-50">로딩 중...</p>
+    };
 
     return (
         <>
@@ -48,8 +44,8 @@ export default function Likes () {
                     lg:grid-cols-[repeat(auto-fit,minmax(200px,200px))] ">
                     {movies.map((movie, i) => (
                         <PosterCard 
-                            key={movie.id}
-                            id={movie.id} 
+                            key={`${movie.media_type}-${movie.id}`}
+                            id={Number(movie.id)} 
                             titleAndName={movie.title || movie.name} 
                             mediaType={movie.media_type || "movie"} 
                             posterPath={movie.poster_path} 

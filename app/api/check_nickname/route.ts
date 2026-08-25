@@ -14,5 +14,5 @@ export async function GET ( req: Request) {
         where user_nickname=${nickname};
     `;
 
-    return new Response(JSON.stringify({ success: existing[0].count > 0}));
+    return Response.json({ success: existing[0].count > 0});
 };

@@ -47,7 +47,7 @@ export function useToggleLikeMutation ( userId: string | null, mediaType: string
         },
         // 낙관적 업데이트.
         // mutationFn 실행 전 우선 실행된다. 
-        onMutate: async ({mediaId}: ToggleVars) => {
+        onMutate: async ({mediaId, isLikedBefore}: ToggleVars) => {
             if ( !userId ) throw new Error("LOGIN_REQUIRED");
             // refeth 중인 데이터 요청을 취소한다. 
             // 만일 likeMovies가 백그라운드에서 실행 중일 때 
@@ -57,12 +57,11 @@ export function useToggleLikeMutation ( userId: string | null, mediaType: string
             // refetch 요청을 취소하고 기존에 있던 가장 최신의 캐싱된 값을 저장한다.
             const prev = queryClient.getQueryData<LikeMovie[]>(queryKey) ?? [];
             // 캐싱된 값 중 mediaId와 mediaType과 동일한 값이 있으면 true, 없다면 false 반환.
-            const isLiked = prev.some(([id, type]) => id === mediaId && type === mediaType);
         
             // 좋아요 요청 혹은 취소 관리
             queryClient.setQueryData<LikeMovie[]>(queryKey, (old = []) => {
-                if ( isLiked ) {
-                    return old.filter(([id, type]) => !(id === mediaId && type === mediaType));
+                if ( isLikedBefore ) {
+                    return old.filter(([id, type]) => !(Number(id) === mediaId && type === mediaType));
                 }
                 return [...old, [mediaId, mediaType]];
             });
