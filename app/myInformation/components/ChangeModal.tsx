@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ModalButton from "./ModalButton";
-import ModalInput from "./ModalInput";
+import ModalButton from "@/components/ModalButton";
+import ModalInput from "@/components/ModalInput";
 import { useRouter } from "next/navigation";
 
 type Information = {
