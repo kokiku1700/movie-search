@@ -7,7 +7,7 @@ async function getMediaDetail (id: number, type: string) {
         method: "GET",
         headers: {
             accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
+            Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`
         }
     };
     const res = await fetch(url, options);
@@ -24,7 +24,7 @@ async function getCredits (id: number, type: string) {
         method: "GET",
         headers: {
             accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
+            Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`
         }
     };
     const res = await fetch(url, options);
@@ -41,7 +41,7 @@ async function getVideos (id: number, type: string) {
         method: "GET",
         headers: {
             accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
+            Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`
         }
     };
     const res = await fetch(url, options);
@@ -60,7 +60,7 @@ async function getContentRating ( id: number, type: string ) {
         method: "GET",
         headers: {
             accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
+            Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`
         },
     };
     const res = await fetch(url, options);

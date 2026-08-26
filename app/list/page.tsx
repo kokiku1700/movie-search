@@ -1,4 +1,4 @@
-import { getMovies } from "@/lib/searchGetMovie";
+import { getMovies } from "@/lib/tmdb/searchGetMovie";
 import SearchList from "@/app/list/components/SearchList";
 import Pagination from "@/app/list/components/Pagination";
 

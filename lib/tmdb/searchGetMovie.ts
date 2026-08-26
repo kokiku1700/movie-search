@@ -25,7 +25,7 @@ export async function getMovies ( query: string, page: number ): Promise<SearchR
     const res = await fetch(`https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=ko-kr&page=${page}`, {
         headers: {
             accept: 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
+            Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`
         }
     });
 

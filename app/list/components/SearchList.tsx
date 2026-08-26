@@ -1,6 +1,6 @@
 "use client";
 
-import { Media } from "@/lib/searchGetMovie";
+import { Media } from "@/lib/tmdb/searchGetMovie";
 import PosterCard from "../../../components/PosterCard";
 
 export default function SearchList ( {medias}: {medias:Media[]}) {

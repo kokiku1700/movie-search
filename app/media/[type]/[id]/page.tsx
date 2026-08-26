@@ -1,6 +1,6 @@
 import Image from "next/image";
 import LikeButton from "@/components/LikeButton";
-import { getMediaDetail, getCredits, getVideos, getContentRating } from "@/lib/getDetail";
+import { getMediaDetail, getCredits, getVideos, getContentRating } from "@/lib/tmdb/getDetail";
 import star from "@/public/star.png";
 
 // metadata의 title을 동적으로 변경

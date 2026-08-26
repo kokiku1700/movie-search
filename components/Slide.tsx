@@ -9,28 +9,18 @@ import { useEffect, useRef, useState } from "react";
 import next from "@/public/next.png";
 import prev from "@/public/prev.png";
 import PosterCard from "./PosterCard";
+import { Movie } from "@/type/media";
 
 // 전달 받은 tmdb api와 슬라이드 제목의 타입
 type Props = {
     url: string;
     subject: string;
     mediaType?: string;
-}
-// 영화 각각의 정보의 타입
-interface Movie {
-    id: number;
-    media_type?: string;
-    title?: string;
-    name?: string;
-    backdrop_path: string;
-    poster_path: string;
-    overview: string;
-    release_date?: string;
-}
+};
 
 interface Movies {
     results: Movie[];
-}
+};
 
 
 export default function MovieSlide ({ url, subject, mediaType }: Props) {
@@ -45,12 +35,11 @@ export default function MovieSlide ({ url, subject, mediaType }: Props) {
     // 전달 받은 url로 작품 목록을 받아온다.
     useEffect(() => {
         async function getMovieData () {
-            const res =  await fetch(`https://api.themoviedb.org/3/${mediaType ? mediaType : ""}${url}`, {
-                headers: {
-                    accept: 'application/json',
-                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
-                }
+            const res =  await fetch(`/api/tmdb/slide?mediaType=${mediaType}&url=${url}`, {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
             });
+            
             const data: Movies = await res.json();
             const result = data.results.map(item => ({
                 ...item,
@@ -58,7 +47,7 @@ export default function MovieSlide ({ url, subject, mediaType }: Props) {
             }));
 
             setMovies(result);
-        }
+        };
         
         getMovieData();
     }, []);
