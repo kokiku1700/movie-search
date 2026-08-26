@@ -140,7 +140,7 @@ export default function BackDropSlide ({ data }: Props) {
 
                                     <div className="mt-8">
                                         <Link
-                                            href={`/${media.media_type}/${media.id}`}
+                                            href={`/media/${media.media_type}/${media.id}`}
                                             className="
                                                 inline-flex
                                                 items-center

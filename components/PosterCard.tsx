@@ -11,28 +11,33 @@ type Props = {
     mediaType: string;
     posterPath:string;
     idx?: number;
+    lanked: boolean;
+    voteAverage: number;
 }
 
-export default function PosterCard ({id, titleAndName, mediaType, posterPath, idx}: Props) {
+export default function PosterCard ({id, titleAndName, mediaType, posterPath, voteAverage, lanked, idx}: Props) {
     const [loaded, setLoaded] = useState(false);
 
     return (
-        <div className="relative overflow-hidden">
-            <h2 className="
-                my-1 
-                overflow-hidden truncate whitespace-nowrap 
-                text-center text-base
-                lg:text-xl
-                ">
-                {titleAndName}
-            </h2>
+        <div className="relative overflow-hidden"> 
+            <div 
+                className={`
+                    ${lanked ? "flex" : "hidden"}
+                    justify-center items-center gap-1`}>
+                <span className="relative -top-[2px] text-sky-400">
+                    ★
+                </span>
+                <span>
+                    {voteAverage.toFixed(1)}
+                </span>
+            </div>  
+            
             <div className="relative group">
                 <span className="
                     absolute inset-0 flex items-center justify-center
                     px-2 py-1 rounded-lg bg-black/60 text-white text-md text-center
                     z-50 opacity-0 pointer-events-none
-                    group-hover:opacity-100 transition-opacity
-                ">
+                    group-hover:opacity-100 transition-opacity">
                     {titleAndName}
                 </span>
                 <Link 
@@ -57,6 +62,13 @@ export default function PosterCard ({id, titleAndName, mediaType, posterPath, id
                 </Link>
                 <LikeButton movieId={id} mediaType={mediaType} />
             </div>
+            <h2 className="
+                my-1 
+                overflow-hidden truncate whitespace-nowrap 
+                text-center text-base
+                lg:text-xl">
+                {} {titleAndName}
+            </h2>
         </div>
     )
 };

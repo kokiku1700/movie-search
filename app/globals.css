@@ -7,6 +7,14 @@ body {
 
 @theme {
   --color-my-gray: rgb(52, 51, 51);
+  --font-blackhansans: "blackhansans", sans-serif;
+}
+
+@font-face {
+  font-family: 'blackhansans';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/BlackHanSans-Regular.ttf');
 }
 
 .hero-swiper .swiper-pagination-bullet {
