@@ -11,8 +11,8 @@ type Props = {
     mediaType: string;
     posterPath:string;
     idx?: number;
-    lanked: boolean;
-    voteAverage: number;
+    lanked?: boolean;
+    voteAverage?: number;
 }
 
 export default function PosterCard ({id, titleAndName, mediaType, posterPath, voteAverage, lanked, idx}: Props) {
@@ -28,7 +28,7 @@ export default function PosterCard ({id, titleAndName, mediaType, posterPath, vo
                     ★
                 </span>
                 <span>
-                    {voteAverage.toFixed(1)}
+                    {voteAverage?.toFixed(1)}
                 </span>
             </div>  
             
