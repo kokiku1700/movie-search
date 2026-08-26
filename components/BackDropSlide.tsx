@@ -24,16 +24,16 @@ export default function BackDropSlide ({ data }: Props) {
                 modules={[Autoplay, EffectFade, Pagination]}
                 effect="fade"
                 loop
-                speed={1000}
+                speed={1500}
                 pagination={{
                     clickable: true,
                 }}
                 autoplay={{
-                    delay: 5000,
+                    delay: 4000,
                     disableOnInteraction: false,
                 }}
             >
-                {data.map((media) => {
+                {data.map((media, idx) => {
                     const title = media.title ?? media.name;
                     const releaseDate =
                         media.release_date ?? media.first_air_date;
@@ -49,7 +49,7 @@ export default function BackDropSlide ({ data }: Props) {
                                     src={`https://image.tmdb.org/t/p/original${media.backdrop_path}`}
                                     alt={title || ""}
                                     fill
-                                    priority
+                                    priority={idx === 0 || idx === 1}
                                     sizes="100vw"
                                     className="object-cover"/>)}
 
