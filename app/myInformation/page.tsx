@@ -1,6 +1,6 @@
 "use client";
 
-import ChangeModal from "@/components/ChangeModal";
+import ChangeModal from "@/app/myInformation/components/ChangeModal";
 import Logo from "@/components/Logo";
 import ModalButton from "@/components/ModalButton";
 import { useRouter } from "next/navigation";
