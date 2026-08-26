@@ -1,7 +1,7 @@
 "use client";
 
-import PwFindForm from "@/components/PwFindForm";
-import PwFindResult from "@/components/PwFindResult";
+import PwFindForm from "@/app/pw_Find/components/PwFindForm";
+import PwFindResult from "@/app/pw_Find/components/PwFindResult";
 import { useState } from "react";
 
 export default function PWFind () {

@@ -1,7 +1,7 @@
 "use client";
 
 import { Media } from "@/lib/searchGetMovie";
-import PosterCard from "./PosterCard";
+import PosterCard from "../../../components/PosterCard";
 
 export default function SearchList ( {medias}: {medias:Media[]}) {
 

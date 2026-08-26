@@ -1,9 +1,9 @@
 "use client"
 
 import Link from "next/link";
-import Button from "./Button";
-import Logo from "./Logo";
-import Input from "./Input";
+import Button from "../../../components/Button";
+import Logo from "../../../components/Logo";
+import Input from "../../../components/Input";
 import { useState } from "react";
 import { validation } from "@/domains/validate";
 import { useRouter } from "next/navigation";

@@ -1,6 +1,6 @@
 import { getMovies } from "@/lib/searchGetMovie";
-import SearchList from "@/components/SearchList";
-import Pagination from "@/components/Pagination";
+import SearchList from "@/app/list/components/SearchList";
+import Pagination from "@/app/list/components/Pagination";
 
 interface MovieListProps {
     searchParams: Promise<{q: string; page: number}>;

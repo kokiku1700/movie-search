@@ -56,7 +56,6 @@ export function useToggleLikeMutation ( userId: string | null, mediaType: string
 
             // refetch 요청을 취소하고 기존에 있던 가장 최신의 캐싱된 값을 저장한다.
             const prev = queryClient.getQueryData<LikeMovie[]>(queryKey) ?? [];
-            // 캐싱된 값 중 mediaId와 mediaType과 동일한 값이 있으면 true, 없다면 false 반환.
         
             // 좋아요 요청 혹은 취소 관리
             queryClient.setQueryData<LikeMovie[]>(queryKey, (old = []) => {
