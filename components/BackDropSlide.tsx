@@ -41,7 +41,7 @@ export default function BackDropSlide ({ data }: Props) {
                     return (
                         <SwiperSlide
                             key={`${media.media_type}-${media.id}`}
-                            className="relative w-full h-full"
+                            className="relative w-full h-full bg-zinc-950"
                         >
                             {/* 백드롭 */}
                             {media.backdrop_path && (
