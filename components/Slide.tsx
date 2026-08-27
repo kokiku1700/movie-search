@@ -128,7 +128,7 @@ export default function MovieSlide ({ url, subject, mediaType, lanked }: Props) 
                 {movies.map((movie, i) => (
                     <SwiperSlide
                         key={movie.id}
-                        className="!w-auto py-10">
+                        className={`!w-auto ${lanked ? "py-10" : "py-5"} `}>
                         <div
                             className={`
                                 relative
