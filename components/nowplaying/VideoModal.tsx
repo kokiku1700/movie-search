@@ -44,15 +44,17 @@ export default function VideoModal ({ mediaId, setMediaId }: Props) {
                 <div 
                     className="
                         relative
-                        w-[70%] h-[70%]
+                        w-full h-[70%]
                         mx-auto
-                        animate-modal-scale-in">
+                        animate-modal-scale-in
+                        lg:w-[70%]">
                     <button 
                         type="button"
                         onClick={() => setMediaId(null)}
                         className="
-                            absolute top-[-30px] right-[-50px]
-                            cursor-pointer">
+                            absolute top-[-40px] right-5
+                            cursor-pointer
+                            lg:top-[-30px] lg:right-[-50px]">
                         [ 닫기 ]
                     </button>
                     <iframe 
