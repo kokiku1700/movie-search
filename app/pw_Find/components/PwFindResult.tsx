@@ -77,7 +77,7 @@ export default function PwFindResult ( { setStep, findState, searchResult, searc
             bg-gradient-to-br from-neutral-200 to-neutral-400
             lg:w-[60%]
             xl:w-[40%] xl:mt-25 xl:p-20">
-            <Logo loc="black"/>
+            <Logo/>
             {findState 
                 ?
                 <form onSubmit={onSubmit}>

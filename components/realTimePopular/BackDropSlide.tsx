@@ -9,6 +9,7 @@ import Link from "next/link";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
+import ViewDetailButton from "../ViewDetailButton";
 
 
 type Props = {
@@ -16,7 +17,7 @@ type Props = {
 }
 
 export default function BackDropSlide ({ data }: Props) {
-    console.log(data)
+    
     return (
         <div>
             <Swiper
@@ -138,22 +139,7 @@ export default function BackDropSlide ({ data }: Props) {
                                         {media.overview ? media.overview : "제공되는 줄거리 없음"}
                                     </p>
 
-                                    <div className="mt-8">
-                                        <Link
-                                            href={`/media/${media.media_type}/${media.id}`}
-                                            className="
-                                                inline-flex
-                                                items-center
-                                                rounded-lg
-                                                bg-white
-                                                px-6 py-3
-                                                text-sm font-semibold
-                                                text-zinc-900
-                                                transition
-                                                hover:bg-zinc-200">
-                                            자세히 보기
-                                        </Link>
-                                    </div>
+                                    <ViewDetailButton type={media.media_type ?? ""} id={media.id} />
                                 </div>
                             </div>
                         </SwiperSlide>

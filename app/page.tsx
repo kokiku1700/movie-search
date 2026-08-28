@@ -1,6 +1,7 @@
 import Slide from "@/components/Slide";
 import Header from "@/components/Header";
-import RealTimePopular from "@/components/RealTimePopular";
+import RealTimePopular from "@/components/realTimePopular/RealTimePopular";
+import NowPlayingMovieSection from "@/components/nowplaying/NowPlayingMovieSection";
 
 export default async function Home() {
   
@@ -13,6 +14,7 @@ export default async function Home() {
 				subject="현재 인기 영화" 
 				mediaType="movie" 
 				lanked={false}/>
+			<NowPlayingMovieSection />
 			<Slide 
 				url="/top_rated?language=ko&page=1" 
 				subject="최고 평점 영화" 

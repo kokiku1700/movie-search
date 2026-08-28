@@ -8,7 +8,7 @@ export default function Logo () {
         <Link 
             href={"/"}
             className={`
-                relative w-50 h-20 block
+                relative w-40 h-20 block
                 cursor-pointer`}>
             <Image 
                 src={logo} alt="로고"

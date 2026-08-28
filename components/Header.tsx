@@ -1,8 +1,8 @@
 "use client";
 
 import Logo from "./Logo";
-import UserMenu from "./UserMenu";
-import SearchBox from "./SearchBox";
+import UserMenu from "./header/UserMenu";
+import SearchBox from "./header/SearchBox";
 import menu from "@/public/menu.png";
 import Image from "next/image";
 import { useState } from "react";
@@ -16,7 +16,7 @@ export default function Header () {
 
     return (
         <header className="
-            sticky w-full top-0 z-9999 shadow-md
+            sticky w-full top-0 z-999 shadow-md
             bg-my-gray pb-2 px-3
             lg:py-2"
         >

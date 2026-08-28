@@ -55,7 +55,7 @@ export default function PwFindForm ({ setStep, setFindState, setSearchResult, se
                 bg-gradient-to-br from-neutral-200 to-neutral-400
                 lg:w-[60%]
                 xl:w-[40%] xl:mt-25 xl:p-20">
-            <Logo loc="black" />
+            <Logo/>
             <p className="
                 mt-5 text-black
                 xl:mt-10 xl:text-xl xl:mb-5">

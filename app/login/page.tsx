@@ -45,7 +45,7 @@ export default function Login () {
                 bg-gradient-to-br from-neutral-200 to-neutral-400
                 lg:w-[60%] 
                 xl:w-[40%]">
-            <Logo loc="login" />
+            <Logo/>
             <p className="
                 my-2 
                 text-sm text-neutral-700
@@ -65,7 +65,7 @@ export default function Login () {
                 
                 <p className={`${errorState ? "block" : "hidden"} text-red-600 mt-3`}>{errorMessage}</p>
                 <div className="m-3">
-                    <Link href={"signUp"} className="text-black hover:text-sky-500">회원가입</Link>
+                    <Link href={"sign-up"} className="text-black hover:text-sky-500">회원가입</Link>
                     <span className="mx-2 cursor-default text-black">|</span>
                     <Link href={"pw_Find"} className="text-black hover:text-sky-500">비밀번호 찾기</Link>
                 </div>
