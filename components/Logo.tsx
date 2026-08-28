@@ -1,25 +1,18 @@
 import Link from "next/link";
+import logo from "@/public/logo.svg";
+import Image from "next/image";
 
-type Props = {
-    loc?: string;
-}
-
-export default function Logo ({ loc }: Props) {
+export default function Logo () {
 
     return(
         <Link 
             href={"/"}
             className={`
-                text-3xl 
-                cursor-pointer
-                ${loc && "text-black"} 
-                hover:text-shadow-lg
-                hover:${loc ? "text-shadow-white" : "text-shadow-black"}  
-                sm:text-4xl 
-                xl:text-5xl
-            `}
-        >
-            D.MS
+                relative w-50 h-20 block
+                cursor-pointer`}>
+            <Image 
+                src={logo} alt="로고"
+                fill/>
         </Link>
-    )
-}
+    );
+};
