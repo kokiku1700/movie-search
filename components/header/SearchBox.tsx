@@ -23,8 +23,8 @@ export default function SearchBox () {
         <div className="
             relative 
             flex justify-center items-center 
-            w-[100%] 
-            sm:w-[90%] xl:w-[70%]">
+            w-full
+            sm:w-[90%]">
             <SearchBar search={search} setSearch={setSearch} onEnter={handlerSearch} />
             <SearchButton onClick={handlerSearch} />
         </div>

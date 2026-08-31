@@ -24,21 +24,18 @@ export function useLikeMoviesDetailQuery (
         queryKey: ["likedMoviesDetail", likes],
         enabled: enabled && likes.length > 0,
         queryFn: async () => {
-            const moviePromises = likes.map(async ([id, mediaType]) => {
-                const res = await fetch(`https://api.themoviedb.org/3/${mediaType}/${id}?language=ko`, {
-                    headers: {
-                        accept: 'application/json',
-                        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`
-                    }
-                });
-                const movie = await res.json();
-                // tmdb에서 작품을 찾을 때는 type과 id가 있어야 된다. 
-                // 그렇게 해서 불러온 데이터 안에는 type이 존재하지 않는다. 
-                // 그래서 이렇게 직접 넣는 방식을 사용했다. 
-                return { ...movie, media_type: mediaType };
+            const params = new URLSearchParams({
+                likeMovies: JSON.stringify(likes),
+                userIdBool: String(enabled),
             });
 
-            return Promise.all(moviePromises);
+            const res = await fetch(`/api/likes?${params.toString()}`);
+
+            if ( !res.ok ) {
+                throw new Error("좋아요 작품을 불러오지 못했습니다.");
+            };
+
+            return res.json();
         },
     });
-}
+};

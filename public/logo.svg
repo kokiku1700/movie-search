@@ -53,36 +53,7 @@
        aria-label="MS" />
     <g
        id="g40"
-       transform="matrix(0.54331459,0,0,0.6329845,35.911585,63.444895)">
-      <rect
-         style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
-         id="rect36"
-         width="4.3578434"
-         height="3.2683825"
-         x="46.726818"
-         y="29.259804" />
-      <rect
-         style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
-         id="rect37"
-         width="4.3578434"
-         height="3.2683825"
-         x="46.571178"
-         y="54.628677" />
-      <rect
-         style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
-         id="rect38"
-         width="4.3578434"
-         height="3.2683825"
-         x="46.571178"
-         y="46.172386" />
-      <rect
-         style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
-         id="rect39"
-         width="4.3578434"
-         height="3.2683825"
-         x="46.726818"
-         y="37.716095" />
-    </g>
+       transform="matrix(0.54331459,0,0,0.81660416,35.911585,58.07222)" />
     <g
        id="g44"
        transform="matrix(0.52520413,0,0,0.56538423,28.732453,65.422866)">
@@ -121,6 +92,38 @@
            cy="46.613354"
            r="2.1011028" />
       </g>
+    </g>
+    <g
+       id="g7"
+       transform="matrix(1,0,0,0.96069868,-0.06960448,-1.1566949)">
+      <rect
+         style="fill:#000000;fill-opacity:0.952381;stroke-width:0.324448"
+         id="rect4"
+         width="4.1066647"
+         height="3.1721647"
+         x="61.629051"
+         y="91.672821" />
+      <rect
+         style="fill:#000000;fill-opacity:0.952381;stroke-width:0.324448"
+         id="rect5"
+         width="4.1066647"
+         height="3.1721647"
+         x="61.629051"
+         y="102.6468" />
+      <rect
+         style="fill:#000000;fill-opacity:0.952381;stroke-width:0.324448"
+         id="rect6"
+         width="4.1066647"
+         height="3.1721647"
+         x="61.629051"
+         y="97.159813" />
+      <rect
+         style="fill:#000000;fill-opacity:0.952381;stroke-width:0.324448"
+         id="rect7"
+         width="4.1066647"
+         height="3.1721647"
+         x="61.629051"
+         y="86.185837" />
     </g>
   </g>
 </svg>

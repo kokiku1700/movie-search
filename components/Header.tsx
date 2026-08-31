@@ -18,8 +18,7 @@ export default function Header () {
         <header className="
             sticky w-full top-0 z-999 shadow-md
             bg-my-gray pb-2 px-3
-            lg:py-2"
-        >
+            lg:py-2">
             <div className="
                 grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto]
                 items-center gap-y-2
@@ -32,8 +31,7 @@ export default function Header () {
                 <div className="
                     row-start-2 col-span-3 
                     flex justify-center
-                    lg:flex-1
-                    ">
+                    lg:flex-1">
                     <SearchBox />
                 </div>
                 <div 

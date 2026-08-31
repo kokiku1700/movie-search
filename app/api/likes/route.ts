@@ -1,6 +1,56 @@
 import sql from "@/lib/sql";
 
 type LikeRow = {movie_id: number, media_type: string};
+type LikeMovie = [number, string];
+
+export async function GET ( req: Request ) {
+    const { searchParams } = new URL(req.url);
+    
+    const likeMovieParam = searchParams.get("likeMovies");
+    const userIdBool = searchParams.get("userIdBool");
+
+    if ( !userIdBool ) {
+        return Response.json(
+            { ok: false, message: "로그인 상태를 확인하세요."},
+            { status: 401 },
+        );
+    };
+
+    if ( !likeMovieParam ) {
+        return Response.json(
+            { ok: false, message: "좋아요 목록이 없습니다." },
+            { status: 400 }
+        );
+    };
+
+    const likeMovies: LikeMovie[] = JSON.parse(likeMovieParam);
+    const moviePromises = likeMovies.map(async ([id, mediaType]) => {
+        const res = await fetch(
+            `https://api.themoviedb.org/3/${mediaType}/${id}?language=ko-KR`,
+            {
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+                },
+            }
+        );
+
+        if ( !res.ok ) {
+            throw new Error(`TMDB 요청 실패: ${res.status}`);
+        };
+
+        const movie = await res.json();
+
+        return {
+            ...movie,
+            media_type: mediaType,
+        };
+    });
+
+    const movies = await Promise.all(moviePromises);
+
+    return Response.json(movies);
+};
 
 export async function POST ( req: Request ) {
     const body = await req.json();
@@ -33,8 +83,7 @@ export async function POST ( req: Request ) {
                 on conflict do nothing;
             `;
             return new Response(JSON.stringify({ success: true }));
-    }
-    
+    };
 };
 
 // 좋아요를 취소한다.

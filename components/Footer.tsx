@@ -18,5 +18,5 @@ export default function Footer () {
             <p className="my-5 text-sm lg:text-base">프로젝트에 사용된 영화 및 TV 시리즈 정보는 TMDB(The Movie Database)에서 제공한 API를 사용합니다.</p>
             <p className="text-sm lg:text-base">"This product uses the TMDB API but is not endorsed or certified by TMDB."</p>
         </div>
-    )
+    );
 };
