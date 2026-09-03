@@ -5,9 +5,10 @@ type Props = {
     search: string;
     setSearch: Dispatch<SetStateAction<string>>;
     onEnter: () => void;
-}
+    onFocus: () => void;
+};
 
-export default function SearchBar ({search, setSearch, onEnter}: Props) {
+export default function SearchBar ({ search, setSearch, onEnter, onFocus }: Props) {
 
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
@@ -24,6 +25,7 @@ export default function SearchBar ({search, setSearch, onEnter}: Props) {
             value={search} 
             onChange={onChangeSearch} 
             onKeyDown={onKeyDown}
+            onFocus={onFocus}
             placeholder="제목을 입력해주세요."
             className="
                 w-5/6 rounded-4xl 
@@ -35,7 +37,6 @@ export default function SearchBar ({search, setSearch, onEnter}: Props) {
                 focus:outline-none focus:ring-3
                 focus:ring-sky-500
                 xl:p-3 xl:pl-10 xl:text-2xl
-            "
-        />
+            "/>
     )
 }

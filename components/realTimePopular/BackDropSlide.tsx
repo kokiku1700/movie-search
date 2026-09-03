@@ -26,6 +26,7 @@ export default function BackDropSlide ({ data }: Props) {
                 effect="fade"
                 loop
                 speed={1500}
+                allowTouchMove={false}
                 pagination={{
                     clickable: true,
                 }}
@@ -52,10 +53,10 @@ export default function BackDropSlide ({ data }: Props) {
                                     fill
                                     priority={idx === 0 || idx === 1}
                                     sizes="100vw"
-                                    className="object-cover"/>)}
+                                    className="object-cover pointer-events-none"/>)}
 
                             {/* 전체적으로 이미지 어둡게 */}
-                            <div className="absolute inset-0 bg-black/20" />
+                            <div className="absolute inset-0 bg-black/20 pointer-events-none" />
 
                             {/* 왼쪽 → 오른쪽 그라데이션 */}
                             <div
@@ -64,7 +65,8 @@ export default function BackDropSlide ({ data }: Props) {
                                     bg-gradient-to-r
                                     from-black/90
                                     via-black/55
-                                    to-transparent"/>
+                                    to-transparent
+                                    pointer-events-none"/>
 
                             {/* 아래쪽 그라데이션 */}
                             <div
@@ -73,7 +75,8 @@ export default function BackDropSlide ({ data }: Props) {
                                     bg-gradient-to-t
                                     from-black/80
                                     via-transparent
-                                    to-transparent"/>
+                                    to-transparent
+                                    pointer-events-none"/>
 
                             {/* 콘텐츠 */}
                             <div
