@@ -16,8 +16,7 @@ export default function SearchButton ( {onClick}: Props ) {
                 src={searchButton}
                 alt="검색 버튼" 
                 fill
-                onClick={onClick}
-            />  
+                onClick={() => onClick()} />  
         </div>
     );
 };

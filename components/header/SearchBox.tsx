@@ -27,13 +27,16 @@ export default function SearchBox () {
     };
 
     const handlerSearch = (word?: string) => {
-        const query = word ?? search
-        if ( query.trim() !== "" ) {
+        const query = String(word ?? search).trim();
+        
+        if ( query ) {
             // 기존 코드에서는 &page=1은 없었지만
             // 페이지네이션을 적용하면서 추가했다.
             // 새로 검색하면 첫 페이지를 렌더링해준다.
             if ( pathname === "/list") router.replace(`/list?q=${query}&page=1`, undefined);
             else router.push(`/list?q=${query}&page=1`);
+        } else {
+            alert("검색어를 입력해주세요.")
         };
         setIsFoused(false);
         saveRecentSearch(search);

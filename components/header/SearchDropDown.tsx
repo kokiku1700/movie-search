@@ -22,6 +22,8 @@ export default function SearchDropDown ({ handlerSearch, search, setSearch }: Pr
     }, [])
 
     useEffect(() => {
+        if ( !search ) return;
+        
         const getSearchSuggestions = async () => {
             const res = await fetch(`/api/tmdb/search?query=${encodeURIComponent(search)}`);
             const data = await res.json();
@@ -100,7 +102,7 @@ export default function SearchDropDown ({ handlerSearch, search, setSearch }: Pr
                                     <button
                                         type="button"
                                         onClick={() => handleWordRemove(word)}
-                                        aria-label={`${word} 검색어 삭제`}
+                                        aria-label={`${word} 삭제`}
                                         className="
                                             px-2 py-1.5
                                             text-gray-400
