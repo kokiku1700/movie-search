@@ -45,6 +45,7 @@ export default function SearchDropDown ({ handlerSearch, search, setSearch }: Pr
 
     return (
         <div
+            data-testid="search-dropdown"
             className="
                 absolute top-full left-0 z-50
                 w-full
@@ -75,9 +76,10 @@ export default function SearchDropDown ({ handlerSearch, search, setSearch }: Pr
 
                     {recentWords.length > 0 ? (
                         <div className="flex flex-wrap gap-2">
-                            {recentWords.map((word: string) => (
+                            {recentWords.filter(e => e !== "").map((word: string) => (
                                 <div
                                     key={word}
+                                    data-testid="recent-search-item"
                                     className="
                                         group
                                         flex items-center

@@ -20,13 +20,17 @@ export default function SearchBox () {
         const words: string[] = JSON.parse(localStorage.getItem("word") ?? "[]");
     
         const newWords = [
-            search, ...words.filter(word => word !== search)
+            search, ...words.filter(word => word.trim() !== "" && word !== search)
         ].slice(0, 10);
 
         localStorage.setItem("word", JSON.stringify(newWords));
     };
 
+    // 검색창 입력 또는 드롭다운 항목 클릭 시 검색 실행
     const handlerSearch = (word?: string) => {
+        // word: 드롭다운 항목 클릭 시 전달받은 검색어
+        // search: 검색창에 직접 입력한 검색어
+        // word가 null 또는 undefined면 search 사용
         const query = String(word ?? search).trim();
         
         if ( query ) {
@@ -35,11 +39,11 @@ export default function SearchBox () {
             // 새로 검색하면 첫 페이지를 렌더링해준다.
             if ( pathname === "/list") router.replace(`/list?q=${query}&page=1`, undefined);
             else router.push(`/list?q=${query}&page=1`);
+            saveRecentSearch(query);
         } else {
             alert("검색어를 입력해주세요.")
         };
         setIsFoused(false);
-        saveRecentSearch(search);
     };
 
     useEffect(() => {
