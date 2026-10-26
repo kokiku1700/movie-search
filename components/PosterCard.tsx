@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import LikeButton from "./LikeButton";
 import { useState } from "react";
+import { Clapperboard } from "lucide-react";
 
 type Props = {
     id: number;
@@ -48,17 +49,31 @@ export default function PosterCard ({id, titleAndName, mediaType, posterPath, vo
                     {!loaded && (
                         <div className="absolute inset-0 bg-zinc-700 animate-pulse"></div>
                     )}
-                    <Image
-                        src={`https://image.tmdb.org/t/p/w500${posterPath}`}
-                        alt={titleAndName || "poster"}
-                        fill
-                        sizes="200px"
-                        priority={idx === 0}
-                        className={`
-                            object-cover transition-opacity duration-300
-                            ${loaded ? "opacity-100" : "opacity-0"}`}
-                        onLoad={() => setLoaded(true)}
-                    />
+                    {posterPath ? (
+                        <Image
+                            src={`https://image.tmdb.org/t/p/w500${posterPath}`}
+                            alt={titleAndName || "poster"}
+                            fill
+                            sizes="200px"
+                            priority={idx === 0}
+                            className={`
+                                object-cover transition-opacity duration-300
+                                ${loaded ? "opacity-100" : "opacity-0"}`}
+                            onLoad={() => setLoaded(true)}/>
+                    ) : (
+                        <div
+                            className="
+                                absolute inset-0
+                                flex flex-col items-center justify-center
+                                gap-3 p-4
+                                bg-[#181c24] text-gray-400">
+                            <Clapperboard size={42} strokeWidth={1.5}/>
+                            <span className="text-xs tracking-widest">
+                                NO POSTER
+                            </span>
+                        </div>
+                    )}
+                    
                 </Link>
                 <LikeButton movieId={id} mediaType={mediaType} />
             </div>
