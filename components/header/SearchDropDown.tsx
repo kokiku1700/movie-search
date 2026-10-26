@@ -43,6 +43,7 @@ export default function SearchDropDown ({ handlerSearch, search, setSearch }: Pr
         localStorage.setItem("word", JSON.stringify(newWrods));
     };
 
+    // overscroll-y-contain - 스크롤 끝에서 상위 요소로 스크롤이 전달되는 것을 방지
     return (
         <div
             data-testid="search-dropdown"
@@ -54,6 +55,7 @@ export default function SearchDropDown ({ handlerSearch, search, setSearch }: Pr
                 className="
                     w-[90%] max-h-[520px]
                     mx-auto overflow-y-auto
+                    overscroll-y-contain
                     rounded-2xl
                     border border-gray-200
                     bg-white
