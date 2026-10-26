@@ -87,7 +87,7 @@ export default function UserMenu () {
                             lg:px-3 lg:py-1">
                         로그인
                     </Link>
-                    <Link href={"/signUp"} 
+                    <Link href={"/sign-up"} 
                         className="
                             px-7 sm:px-10 py-3 sm:py-5
                             whitespace-nowrap 
