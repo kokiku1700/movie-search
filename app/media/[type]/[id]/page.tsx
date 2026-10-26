@@ -2,6 +2,8 @@ import Image from "next/image";
 import LikeButton from "@/components/LikeButton";
 import { getMediaDetail, getCredits, getVideos, getContentRating } from "@/lib/tmdb/getDetail";
 import star from "@/public/star.png";
+import CastSection from "./components/CastSection";
+import VideoSection from "./components/VideoSection";
 
 // metadata의 title을 동적으로 변경
 // 작품명이 title로 나온다. 
@@ -29,7 +31,7 @@ export default async function MediaDetail ({
     const videos = await getVideos(id, type);
     // 이용가 등급 
     const contentRating = await getContentRating(id, type);
-
+   
     return (
         <div className="w-[95%] mx-auto">
             <div 
@@ -76,7 +78,6 @@ export default async function MediaDetail ({
                                 <span key={id}>{name}</span>
                             ))}
                         </div>
-
                     </div>
 
                     <div className="
@@ -119,34 +120,8 @@ export default async function MediaDetail ({
                     </div>
                 </div>
             </div>
-            <div>
-                <h1 className="text-3xl my-5">출연진</h1>
-                <div className="flex gap-5">
-                    {credits.cast.map((c: any) => (
-                        <div key={c.id} className="w-[200px] overflow-hidden">
-                            <h3 className="whitespace-nowrap truncate">{c.name}</h3>
-                            <Image 
-                                src={`https://image.tmdb.org/t/p/original${c.profile_path}`}
-                                alt={c.name}
-                                width={200}
-                                height={300} />
-                        </div>
-                    )).slice(0, 7)}
-                </div>
-            </div>   
-            <div>
-                <h1 className="text-3xl my-5">동영상</h1>
-                <div className="flex overflow-x-auto">
-                    {videos.results.map((video:any) => (
-                        <iframe 
-                            key={video.id}
-                            width="40%"
-                            height="400px"
-                            src={`https://www.youtube.com/embed/${video.key}`}
-                            allowFullScreen />
-                    ))}
-                </div>
-            </div>
+            <CastSection cast={credits.cast.slice(0, 20)}/>
+            <VideoSection videos={videos.results} />
         </div>    
     )
 }
