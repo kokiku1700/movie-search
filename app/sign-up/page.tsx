@@ -1,6 +1,5 @@
 "use client";
 
-import Button from "@/components/Button"
 import Input from "@/components/Input"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -67,7 +66,7 @@ export default function SignUp () {
             <form
                 onSubmit={onSubmit}
                 className="
-                    w-full max-w-[480px]
+                    w-full max-w-[550px]
                     rounded-2xl
                     bg-[#404040]
                     px-6 py-10

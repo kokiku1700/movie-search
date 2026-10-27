@@ -2,6 +2,7 @@
 
 import Logo from "@/components/Logo";
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 
 type Props = {
     setStep: React.Dispatch<React.SetStateAction<"identify" | "results">>;
@@ -45,53 +46,87 @@ export default function PwFindForm ({ setStep, setFindState, setSearchResult, se
         }
     };
 
+    
     return (
-        <div 
-            onSubmit={onSubmit}
-            className="
-                flex flex-col items-center 
-                w-[90%] mx-auto mt-10 p-10
-                rounded-xl
-                bg-gradient-to-br from-neutral-200 to-neutral-400
-                lg:w-[60%]
-                xl:w-[40%] xl:mt-25 xl:p-20">
-            <Logo/>
-            <p className="
-                mt-5 text-black
-                xl:mt-10 xl:text-xl xl:mb-5">
-                아이디 혹은 닉네임을 입력해주세요
-            </p>
-            <p className="mt-2 text-red-500">
-                {errorMessage}
-            </p>
-            <form 
-                className="
-                    w-full
-                    flex 
-                    mt-2 mx-auto
-                    lg:w-[60%]">
-                <input 
-                    type="text"
-                    value={inputValue}
-                    onChange={onChangeValue}
-                    className="
-                        w-[80%] 
-                        pl-3 py-1
-                        text-black
-                        rounded-4xl
-                        bg-gray-200
-                        lg:pl-5 lg:py-3 lg:w-full"/>
-                <button className="
-                    px-2
-                    rounded-4xl
-                    text-black whitespace-nowrap
-                    bg-gray-200
-                    cursor-pointer
-                    lg:px-4
-                ">
-                    확인
-                </button>
-            </form> 
-        </div>
-    )
-}
+        <main className="
+            min-h-[100dvh]
+            flex items-center justify-center
+            bg-[#343333]
+            px-4 py-12">
+            <section className="
+                w-full max-w-[500px]
+                rounded-2xl
+                bg-[#404040]
+                px-6 py-10
+                shadow-xl shadow-black/20
+                sm:px-10">
+
+                <div className="flex flex-col items-center">
+                    <Logo />
+                </div>
+
+                <form
+                    onSubmit={onSubmit}
+                    className="flex flex-col gap-5 mt-5">
+                    <div className="flex flex-col gap-2">
+                        <label
+                            htmlFor="account"
+                            className="text-sm font-medium text-neutral-200">
+                            아이디 또는 닉네임
+                        </label>
+
+                        <input
+                            id="account"
+                            type="text"
+                            value={inputValue}
+                            onChange={onChangeValue}
+                            placeholder="아이디 또는 닉네임 입력"
+                            autoComplete="username"
+                            className="
+                                w-full px-4 py-3
+                                rounded-lg
+                                bg-[#343333]
+                                border border-neutral-600
+                                text-white
+                                placeholder:text-neutral-500
+                                outline-none
+                                transition-colors duration-200
+                                focus:border-sky-400"/>
+                    </div>
+
+                    {errorMessage && (
+                        <p
+                            role="alert"
+                            className="text-sm text-red-400">
+                            {errorMessage}
+                        </p>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="
+                            w-full py-3 mt-2
+                            rounded-lg
+                            bg-sky-400 text-neutral-900
+                            font-semibold
+                            cursor-pointer
+                            transition-colors duration-200
+                            hover:bg-sky-300">
+                        확인
+                    </button>
+                </form>
+
+                <div className="mt-7 text-center">
+                    <Link
+                        href="/login"
+                        className="
+                            text-sm text-neutral-300
+                            transition-colors
+                            hover:text-sky-400">
+                        로그인으로 돌아가기
+                    </Link>
+                </div>
+            </section>
+        </main>
+    );
+};
