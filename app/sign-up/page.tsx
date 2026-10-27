@@ -57,116 +57,197 @@ export default function SignUp () {
         };  
     };
 
+    
     return (
-        <form 
-            onSubmit={onSubmit}
-            className="
-                w-[95%] bg-[#DCDCDC] 
-                mx-auto pt-10 pb-20 mt-15 rounded-lg 
-                flex flex-col items-center
-                bg-gradient-to-br from-neutral-200 to-neutral-400
-                lg:w-[40%] lg:mt-30
-        ">
-            <h1 className="text-2xl text-black m-5">회원가입</h1>
-            <div className="w-full flex flex-col items-center ">
-                <div className="w-[80%] flex flex-col lg:w-[60%]">
-                    <Input 
-                        type="name" value={nickname} kind="signup"
-                        onChange={setNickname} 
-                        validate={v => validation.name.regex.test(v)} 
-                        onValidate={isValid => setValids(prev => ({...prev, nickname: isValid}))}
-                        setErrorState={setNickNameErrorState}
-                        setErrorMessage={setNickNameErrorMessage}
-                        placeholder="닉네임"/>
-                    <p className={`${nicknameErrorState === null ?
-                                    'text-black' : 
-                                    nicknameErrorState ? 
-                                    "text-sky-500" : 
-                                    "text-red-500"} mx-5`}>
-                        <span className="mr-2">※</span>
-                        {nicknameErrorState === null ? 
-                            validation.name.guide : 
-                            nicknameErrorState ? 
-                            "사용가능합니다." :
-                            nicknameErrorMessage
-                        }
+        <main className="
+            min-h-[calc(100dvh-80px)]
+            flex items-center justify-center
+            bg-[#343333]
+            px-4 py-12">
+            <form
+                onSubmit={onSubmit}
+                className="
+                    w-full max-w-[480px]
+                    rounded-2xl
+                    bg-[#404040]
+                    px-6 py-10
+                    shadow-xl shadow-black/20
+                    sm:px-10">
+
+                <div className="mb-8">
+                    <h1 className="text-2xl font-bold text-white">
+                        회원가입
+                    </h1>
+                    <p className="mt-2 text-sm text-neutral-400">
+                        D.MS에 가입하고 좋아하는 작품을 기록해보세요.
                     </p>
                 </div>
-                <div className="w-[80%] flex flex-col lg:w-[60%]">
-                    <Input type="id" value={id} kind="signup" 
-                        onChange={setId} 
-                        validate={v => validation.id.regex.test(v)} 
-                        onValidate={isValid => setValids(prev => ({...prev, id: isValid}))}
-                        setErrorState={setIdErrorState}
-                        setErrorMessage={setIdErrorMessage}
-                        placeholder="아이디"/>
-                    <p className={`${idErrorState === null ?
-                                    'text-black' : 
-                                    idErrorState ? 
-                                    "text-sky-500" : 
-                                    "text-red-500"} mx-5`}>
-                        <span className="mr-2">※</span>
-                        {idErrorState === null ? 
-                            validation.id.guide : 
-                            idErrorState ? 
-                            "사용가능합니다." :
-                            idErrorMessage
-                        }
-                    </p>
-                </div>
-                <div className="w-[80%] flex flex-col lg:w-[60%]">
-                    <Input type="password" value={password} kind="signup" 
-                        onChange={setPassword} 
-                        validate={v => validation.password.regex.test(v)} 
-                        onValidate={isValid => setValids(prev => ({...prev, password: isValid}))}
-                        setErrorState={setPasswordErrorState}
-                        setErrorMessage={setPasswordErrorMessage}
-                        placeholder="비밀번호"/>
-                    <p className={`${passwordErrorState === null ?
-                                    'text-black' : 
-                                    passwordErrorState ? 
-                                    "text-sky-500" : 
-                                    "text-red-500"} mx-5`}>
-                        <span className="mr-2">※</span>
-                        {passwordErrorState === null ? 
-                            validation.password.guide : 
-                            passwordErrorState ? 
-                            "사용가능합니다." :
-                            passwordErrorMessage
-                        }
-                    </p>
-                </div>
-                <div className="w-[80%] flex flex-col lg:w-[60%]">
-                    <Input type="password" value={passwordCheck} kind="signup" 
-                        onChange={setPasswordCheck} 
-                        pwValue={{password}} 
-                        onValidate={isValid => setValids(prev => ({...prev, passwordCheck: isValid}))}
-                        validate={(v, vc) => v === vc?.password && vc.password !== ""} 
-                        setErrorState={setPasswordCheckErrorState}
-                        setErrorMessage={setPasswordCheckErrorMessage}
-                        placeholder="비밀번호 확인"/>
-                        <p className={`mx-5 
-                                    ${passwordCheckErrorState === null ? "hidden" : "block"}
-                                    ${passwordCheckErrorState ? "text-sky-500" : "text-red-500"}`}>
-                            <span className="mr-2">※</span>
-                            {passwordCheckErrorState ? "사용가능합니다." : passwordCheckErrorMessage}
+
+                <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-neutral-200">
+                            닉네임
+                        </label>
+                        <Input
+                            type="name"
+                            value={nickname}
+                            kind="signup"
+                            onChange={setNickname}
+                            validate={v => validation.name.regex.test(v)}
+                            onValidate={isValid =>
+                                setValids(prev => ({ ...prev, nickname: isValid }))
+                            }
+                            setErrorState={setNickNameErrorState}
+                            setErrorMessage={setNickNameErrorMessage}
+                            placeholder="닉네임을 입력하세요"/>
+                        <p className={`
+                            text-xs leading-relaxed
+                            ${nicknameErrorState === null
+                                ? "text-neutral-400"
+                                : nicknameErrorState
+                                    ? "text-sky-400"
+                                    : "text-red-400"}
+                        `}>
+                            <span className="mr-1">※</span>
+                            {nicknameErrorState === null
+                                ? validation.name.guide
+                                : nicknameErrorState
+                                    ? "사용가능합니다."
+                                    : nicknameErrorMessage}
                         </p>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-neutral-200">
+                            아이디
+                        </label>
+                        <Input
+                            type="id"
+                            value={id}
+                            kind="signup"
+                            onChange={setId}
+                            validate={v => validation.id.regex.test(v)}
+                            onValidate={isValid =>
+                                setValids(prev => ({ ...prev, id: isValid }))
+                            }
+                            setErrorState={setIdErrorState}
+                            setErrorMessage={setIdErrorMessage}
+                            placeholder="아이디를 입력하세요"
+                        />
+                        <p className={`
+                            text-xs leading-relaxed
+                            ${idErrorState === null
+                                ? "text-neutral-400"
+                                : idErrorState
+                                    ? "text-sky-400"
+                                    : "text-red-400"}
+                        `}>
+                            <span className="mr-1">※</span>
+                            {idErrorState === null
+                                ? validation.id.guide
+                                : idErrorState
+                                    ? "사용가능합니다."
+                                    : idErrorMessage}
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-neutral-200">
+                            비밀번호
+                        </label>
+                        <Input
+                            type="password"
+                            value={password}
+                            kind="signup"
+                            onChange={setPassword}
+                            validate={v => validation.password.regex.test(v)}
+                            onValidate={isValid =>
+                                setValids(prev => ({ ...prev, password: isValid }))
+                            }
+                            setErrorState={setPasswordErrorState}
+                            setErrorMessage={setPasswordErrorMessage}
+                            placeholder="비밀번호를 입력하세요"/>
+                        <p className={`
+                            text-xs leading-relaxed
+                            ${passwordErrorState === null
+                                ? "text-neutral-400"
+                                : passwordErrorState
+                                    ? "text-sky-400"
+                                    : "text-red-400"}
+                        `}>
+                            <span className="mr-1">※</span>
+                            {passwordErrorState === null
+                                ? validation.password.guide
+                                : passwordErrorState
+                                    ? "사용가능합니다."
+                                    : passwordErrorMessage}
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-neutral-200">
+                            비밀번호 확인
+                        </label>
+                        <Input
+                            type="password"
+                            value={passwordCheck}
+                            kind="signup"
+                            onChange={setPasswordCheck}
+                            pwValue={{ password }}
+                            onValidate={isValid =>
+                                setValids(prev => ({
+                                    ...prev,
+                                    passwordCheck: isValid
+                                }))
+                            }
+                            validate={(v, vc) =>
+                                v === vc?.password && vc.password !== ""
+                            }
+                            setErrorState={setPasswordCheckErrorState}
+                            setErrorMessage={setPasswordCheckErrorMessage}
+                            placeholder="비밀번호를 다시 입력하세요"/>
+                        {passwordCheckErrorState !== null && (
+                            <p className={`
+                                text-xs leading-relaxed
+                                ${passwordCheckErrorState
+                                    ? "text-sky-400"
+                                    : "text-red-400"}
+                            `}>
+                                <span className="mr-1">※</span>
+                                {passwordCheckErrorState
+                                    ? "사용가능합니다."
+                                    : passwordCheckErrorMessage}
+                            </p>
+                        )}
+                    </div>
                 </div>
-            </div>
-                 
-            <div className="flex w-[60%] gap-[5%]">
-                <Link href={'/'} 
-                    className="
-                        w-[60%]
-                        text-xl text-black text-center
-                        bg-[#FAFAFA] rounded-4xl
-                        p-3 my-3 cursor-pointer
-                        hover:shadow-sm hover:shadow-red-200
-                        hover:text-red-500">
-                    취소
-                </Link>
-                <Button content="확인" />
-            </div>
-        </form>
-    )
-}
+
+                <div className="flex gap-3 mt-9">
+                    <Link
+                        href="/login"
+                        className="
+                            flex-1 flex items-center justify-center
+                            py-3 rounded-lg
+                            bg-[#555555] text-white
+                            font-semibold
+                            transition-colors duration-200
+                            hover:bg-[#4A4A4A]">
+                        취소
+                    </Link>
+
+                    <button
+                        type="submit"
+                        className="
+                            flex-1 py-3 rounded-lg
+                            bg-sky-400 text-neutral-900
+                            font-semibold
+                            cursor-pointer
+                            transition-colors duration-200
+                            hover:bg-sky-300">
+                        확인
+                    </button>
+                </div>
+            </form>
+        </main>
+    );
+};
