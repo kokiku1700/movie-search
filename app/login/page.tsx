@@ -35,42 +35,104 @@ export default function Login () {
             setErrorMessage(result.message);
             setErrorState(true);
         }
-    }
+    };
 
     return (
-        <div className="
-                w-[95%] bg-[#DCDCDC] 
-                mx-auto px-5 pt-10 pb-20 mt-15 rounded-lg    
-                flex flex-col items-center
-                bg-gradient-to-br from-neutral-200 to-neutral-400
-                lg:w-[60%] 
-                xl:w-[40%]">
-            <Logo/>
-            <p className="
-                my-2 
-                text-sm text-neutral-700
-                lg:text-base">
-                당신의 취향을 기록하는 영화 관리 서비스
-            </p>
-            <form 
-                onSubmit={onSubmit}
-                className="
-                    w-full
-                    flex flex-col items-center
-                    mt-2">
-                <div className="w-[80%] lg:w-[60%]">
-                    <Input type="id" value={id} onChange={setId} placeholder="아이디"/>
-                    <Input type="password" value={password} onChange={setPassword} placeholder="비밀번호"/>
-                </div>
+        <main className="
+            min-h-[100dvh]
+            flex items-center justify-center
+            bg-[#343333]
+            px-4 py-12">
+
+            <section className="
+                w-full max-w-[500px]
+                rounded-2xl
+                bg-[#404040]
+                px-6 py-10
+                shadow-xl shadow-black/20
+                sm:px-10">
                 
-                <p className={`${errorState ? "block" : "hidden"} text-red-600 mt-3`}>{errorMessage}</p>
-                <div className="m-3">
-                    <Link href={"sign-up"} className="text-black hover:text-sky-500">회원가입</Link>
-                    <span className="mx-2 cursor-default text-black">|</span>
-                    <Link href={"pw_Find"} className="text-black hover:text-sky-500">비밀번호 찾기</Link>
+                <div className="flex flex-col items-center">
+                    <Logo />
+                    <p className="
+                        mt-4 text-center
+                        text-sm text-neutral-300
+                    ">
+                        당신의 취향을 기록하는 영화 관리 서비스
+                    </p>
                 </div>
-                <Button content="로그인" />
-            </form>
-        </div>
-    )
-}
+
+                <form
+                    onSubmit={onSubmit}
+                    className="flex flex-col gap-5">
+                    
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm text-neutral-200">
+                            아이디
+                        </label>
+                        <Input
+                            type="id"
+                            value={id}
+                            onChange={setId}
+                            placeholder="아이디를 입력하세요"/>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm text-neutral-200">
+                            비밀번호
+                        </label>
+                        <Input
+                            type="password"
+                            value={password}
+                            onChange={setPassword}
+                            placeholder="비밀번호를 입력하세요"/>
+                    </div>
+
+                    {errorState && (
+                        <p
+                            role="alert"
+                            className="text-sm text-red-400">
+                            {errorMessage}
+                        </p>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="
+                            w-full py-3 mt-2
+                            rounded-lg
+                            bg-sky-400 text-neutral-900
+                            font-semibold
+                            cursor-pointer
+                            transition-colors duration-200
+                            hover:bg-sky-300">
+                        로그인
+                    </button>
+                </form>
+
+                <div className="
+                    flex items-center justify-center
+                    gap-4 mt-7
+                    text-sm text-neutral-300">
+                    <Link
+                        href="/sign-up"
+                        className="
+                            transition-colors
+                            hover:text-sky-400">
+                        회원가입
+                    </Link>
+
+                    <span className="text-neutral-500">|</span>
+
+                    <Link
+                        href="/pw_Find"
+                        className="
+                            transition-colors
+                            hover:text-sky-400">
+                        비밀번호 찾기
+                    </Link>
+                </div>
+            </section>
+        </main>
+    );
+};

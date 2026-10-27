@@ -87,15 +87,16 @@ export default function Input ({type, value, kind, onChange, setErrorMessage, se
     return (
         <input 
             className={`
-                w-[100%]
-                text-xl text-black
-                bg-white rounded-2xl 
-                px-2 p-1 mt-3 mb-1
+                w-full
+                text-xl text-white
+                bg-[#343333] rounded-2xl 
+                px-2 p-1 mt-2 mb-1
                 border-2
                 ${valid === null ? "border-gray-200" : valid ? "border-sky-500" : "border-red-500"}
-                focus:outline-none
-                focus:shadow-md
-                focus:shadow-white
+                placeholder:text-neutral-500
+                outline-none
+                transition-colors duration-200
+                focus:border-sky-400
                 lg:px-4 lg:p-3
             `}
             type={type}
